@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voces que Perduran - Preservá las Memorias de Quienes Amás</title>
+    <title>Cómo Sucedió - Todas tus versiones, para siempre | Multicomm AI</title>
     <style>
         * {
             margin: 0;
@@ -12,37 +12,62 @@
         }
         
         :root {
-            --primary-dark: #0a0a0a;
-            --primary-light: #ffffff;
-            --accent-tech: #0066ff;
-            --warm-cream: #FFF8E7;
-            --warm-terracotta: #D2691E;
-            --warm-sage: #87A96B;
-            --warm-brown: #8B4513;
-            --text-dark: #2C2C2C;
-            --text-light: #666666;
-            --shadow: rgba(0, 0, 0, 0.1);
-        }
-        
-        html {
-            scroll-behavior: smooth;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --warm-terracotta: #E07B4F;
+            --soft-cream: #FFF8F3;
+            --sage-green: #7C9885;
+            --deep-brown: #5C4033;
+            --light-gray: #F7F7F7;
         }
         
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
+            color: #333;
+            background: var(--soft-cream);
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 1001;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .language-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Hide English content by default */
+        .english {
+            display: none;
+        }
+        
+        body.en .spanish {
+            display: none;
+        }
+        
+        body.en .english {
+            display: block;
         }
         
         /* Navigation */
-        .navbar {
+        nav {
             position: fixed;
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px var(--shadow);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             transition: all 0.3s ease;
         }
@@ -58,11 +83,10 @@
         
         .logo {
             font-size: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--warm-terracotta), var(--warm-sage));
+            font-weight: bold;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-decoration: none;
         }
         
         .nav-links {
@@ -73,459 +97,500 @@
         }
         
         .nav-links a {
-            color: var(--text-dark);
+            color: #333;
             text-decoration: none;
+            transition: color 0.3s;
             font-weight: 500;
-            transition: color 0.3s ease;
         }
         
         .nav-links a:hover {
             color: var(--warm-terracotta);
         }
         
-        .multicomm-link {
-            font-size: 0.9rem;
-            color: var(--accent-tech);
-            opacity: 0.8;
-        }
-        
-        .cta-button {
-            background: linear-gradient(135deg, var(--warm-terracotta), var(--warm-sage));
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow);
-        }
-        
-        /* Hero Section */
+        /* Hero Section - Dual Focus */
         .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(135deg, var(--warm-cream) 0%, #F5E6D3 100%);
-            padding: 6rem 2rem 2rem;
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--soft-cream) 0%, #FFF 50%, var(--soft-cream) 100%);
             position: relative;
             overflow: hidden;
         }
         
-        .hero-decoration {
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--warm-terracotta) 0%, transparent 70%);
-            opacity: 0.1;
-            border-radius: 50%;
-            top: -300px;
-            right: -300px;
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-50px, 50px) scale(1.1); }
-        }
-        
-        .hero-content {
+        .hero-container {
             max-width: 1200px;
             margin: 0 auto;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--deep-brown);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .dual-paths {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .hero-text h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            color: var(--warm-terracotta);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            animation: fadeInUp 0.8s ease-out;
-        }
-        
-        .hero-text .subtitle {
-            font-size: 1.5rem;
-            color: var(--warm-sage);
-            margin-bottom: 1rem;
-            font-weight: 600;
-            animation: fadeInUp 0.8s ease-out 0.2s;
-            animation-fill-mode: both;
-        }
-        
-        .hero-text p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            line-height: 1.8;
-            animation: fadeInUp 0.8s ease-out 0.4s;
-            animation-fill-mode: both;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.8s ease-out 0.6s;
-            animation-fill-mode: both;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--warm-terracotta), var(--warm-sage));
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(210, 105, 30, 0.3);
-        }
-        
-        .btn-secondary {
+        .path-card {
             background: white;
-            color: var(--warm-terracotta);
-            padding: 1rem 2rem;
-            border: 2px solid var(--warm-terracotta);
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--warm-terracotta);
-            color: white;
-            transform: translateY(-3px);
-        }
-        
-        .hero-image {
-            position: relative;
-            animation: fadeInRight 1s ease-out;
-        }
-        
-        .hero-image img {
-            width: 100%;
+            padding: 2rem;
             border-radius: 20px;
-            box-shadow: 0 20px 40px var(--shadow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         
-        .floating-card {
+        .path-card::before {
+            content: '';
             position: absolute;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px var(--shadow);
-            animation: floatCard 3s ease-in-out infinite;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary-gradient);
         }
         
-        @keyframes floatCard {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .path-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
         
-        .floating-card.card-1 {
-            top: -20px;
-            left: -40px;
-            animation-delay: 0s;
+        .path-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--warm-terracotta);
         }
         
-        .floating-card.card-2 {
-            bottom: -20px;
-            right: -40px;
-            animation-delay: 1.5s;
-        }
-        
-        .card-emoji {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .card-text {
-            font-size: 0.9rem;
-            color: var(--text-dark);
-            font-weight: 600;
-        }
-        
-        /* Features Section */
-        .features {
-            padding: 5rem 2rem;
-            background: white;
-        }
-        
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 4rem;
-        }
-        
-        .section-title {
-            font-family: 'Playfair Display', serif;
+        .path-card .emoji {
             font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .path-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            flex-grow: 1;
+        }
+        
+        .path-card ul {
+            text-align: left;
+            list-style: none;
+            margin: 1rem 0;
+            flex-grow: 1;
+        }
+        
+        .path-card ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .path-card ul li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--sage-green);
+            font-weight: bold;
+        }
+        
+        .path-card .btn {
+            margin-top: auto;
+            align-self: stretch;
+        }
+        
+        /* Unified Message */
+        .unified-message {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin: 3rem auto;
+            max-width: 900px;
+            text-align: center;
+        }
+        
+        .unified-message h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .unified-message p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+        
+        /* Use Cases */
+        .use-cases {
+            padding: 4rem 2rem;
+            background: white;
+        }
+        
+        .use-cases-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .use-cases h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--deep-brown);
+        }
+        
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .case-card {
+            background: var(--soft-cream);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .case-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .case-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .case-card h3 {
             color: var(--warm-terracotta);
             margin-bottom: 1rem;
         }
         
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            line-height: 1.8;
+        .case-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Timeline Feature */
+        .timeline-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(to bottom, white, var(--soft-cream));
+        }
+        
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .timeline-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--deep-brown);
+        }
+        
+        .timeline-visual {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .timeline-visual::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: var(--primary-gradient);
+            z-index: 0;
+        }
+        
+        .age-node {
+            background: white;
+            border: 3px solid var(--warm-terracotta);
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .age-node:hover {
+            transform: scale(1.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .age-node .age {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--warm-terracotta);
+        }
+        
+        .age-node .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* Features */
+        .features {
+            padding: 4rem 2rem;
+            background: white;
+        }
+        
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--deep-brown);
         }
         
         .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
+            gap: 2rem;
         }
         
         .feature-card {
-            background: linear-gradient(135deg, #FFFFFF 0%, #FAFAFA 100%);
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px var(--shadow);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(135, 169, 107, 0.1);
+            background: linear-gradient(135deg, #FFF 0%, var(--soft-cream) 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
         }
         
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px var(--shadow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
         
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            border-radius: 15px;
-        }
-        
-        .icon-memory { background: rgba(210, 105, 30, 0.1); }
-        .icon-voice { background: rgba(135, 169, 107, 0.1); }
-        .icon-ai { background: rgba(139, 69, 19, 0.1); }
-        .icon-family { background: rgba(255, 248, 231, 0.5); }
-        .icon-chat { background: rgba(0, 102, 255, 0.1); }
-        .icon-forever { background: rgba(210, 105, 30, 0.15); }
-        
-        .feature-title {
-            font-size: 1.5rem;
-            color: var(--text-dark);
+        .feature-card h3 {
+            color: var(--warm-terracotta);
             margin-bottom: 1rem;
-            font-weight: 700;
+            font-size: 1.5rem;
         }
         
-        .feature-description {
-            color: var(--text-light);
+        .feature-card p {
+            color: #666;
             line-height: 1.8;
         }
         
-        /* How it Works */
-        .how-it-works {
-            padding: 5rem 2rem;
-            background: var(--warm-cream);
-        }
-        
-        .steps-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-        
-        .step {
-            text-align: center;
-            position: relative;
-        }
-        
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: var(--warm-terracotta);
+        /* CTA Section */
+        .cta {
+            padding: 4rem 2rem;
+            background: var(--primary-gradient);
             color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 0 auto 1.5rem;
+            text-align: center;
         }
         
-        .step-title {
-            font-size: 1.3rem;
-            color: var(--text-dark);
+        .cta h2 {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
             font-weight: 600;
-        }
-        
-        .step-description {
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-        
-        .step:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            top: 30px;
-            left: 60%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--warm-terracotta) 0%, transparent 100%);
-            z-index: -1;
-        }
-        
-        /* Testimonial Section */
-        .testimonial {
-            padding: 5rem 2rem;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
             background: white;
+            color: var(--warm-terracotta);
+            text-align: center;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--warm-terracotta);
+        }
+        
+        /* Testimonial */
+        .testimonial {
+            padding: 4rem 2rem;
+            background: var(--soft-cream);
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
             text-align: center;
         }
         
         .testimonial-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background: linear-gradient(135deg, var(--warm-cream) 0%, #FFFFFF 100%);
+            background: white;
             padding: 3rem;
             border-radius: 20px;
-            box-shadow: 0 10px 30px var(--shadow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         
         .quote-icon {
             font-size: 3rem;
             color: var(--warm-terracotta);
             opacity: 0.3;
-            margin-bottom: 1rem;
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
         }
         
         .testimonial-text {
             font-size: 1.3rem;
-            color: var(--text-dark);
             font-style: italic;
+            color: #555;
+            margin-bottom: 1.5rem;
             line-height: 1.8;
-            margin-bottom: 2rem;
         }
         
         .testimonial-author {
-            font-weight: 600;
-            color: var(--warm-sage);
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 5rem 2rem;
-            background: linear-gradient(135deg, var(--warm-terracotta) 0%, var(--warm-sage) 100%);
-            color: white;
-            text-align: center;
-        }
-        
-        .cta-content h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .cta-content p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .btn-white {
-            background: white;
-            color: var(--warm-terracotta);
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-white:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            color: var(--deep-brown);
         }
         
         /* Footer */
-        .footer {
-            background: var(--primary-dark);
-            color: var(--primary-light);
-            padding: 3rem 2rem 2rem;
-            text-align: center;
+        footer {
+            background: var(--deep-brown);
+            color: white;
+            padding: 3rem 2rem 1rem;
         }
         
-        .footer-content {
+        .footer-container {
             max-width: 1200px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
         }
         
-        .footer-logo {
+        .footer-brand h3 {
             font-size: 1.5rem;
-            font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--warm-terracotta), var(--warm-sage));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
-        .footer-text {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 2rem;
+        .footer-brand p {
+            opacity: 0.8;
+            line-height: 1.8;
         }
         
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
+        .footer-links h4 {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links ul {
+            list-style: none;
         }
         
         .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
+            color: white;
             text-decoration: none;
-            transition: color 0.3s ease;
+            opacity: 0.8;
+            transition: opacity 0.3s;
         }
         
         .footer-links a:hover {
-            color: var(--warm-terracotta);
+            opacity: 1;
         }
         
-        .multicomm-credit {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.5);
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
         }
         
-        .multicomm-credit a {
-            color: var(--accent-tech);
-            text-decoration: none;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .dual-paths {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .timeline-visual {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .timeline-visual::before {
+                width: 3px;
+                height: 80%;
+                top: 10%;
+                left: 50%;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .language-toggle {
+                top: 15px;
+            }
         }
         
         /* Animations */
@@ -540,261 +605,364 @@
             }
         }
         
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .hero-buttons {
-                justify-content: center;
-            }
-            
-            .hero-image {
-                margin-top: 2rem;
-            }
-            
-            .floating-card {
-                display: none;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .step:not(:last-child)::after {
-                display: none;
-            }
+        .animate-in {
+            animation: fadeInUp 0.8s ease forwards;
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Language Toggle -->
+    <div class="language-toggle" onclick="toggleLanguage()">
+        🌐 ES/EN
+    </div>
+
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav>
         <div class="nav-container">
-            <a href="#" class="logo">Voces que Perduran</a>
+            <div class="logo">Cómo Sucedió</div>
             <ul class="nav-links">
-                <li><a href="#features">Características</a></li>
-                <li><a href="#how-it-works">Cómo Funciona</a></li>
-                <li><a href="#testimonial">Testimonios</a></li>
-                <li><a href="https://multicomm.vercel.app" class="multicomm-link">Por Multicomm.ai</a></li>
-                <li><a href="frontend/capturar-historia.html" class="cta-button">Comenzar Ahora</a></li>
+                <li class="spanish"><a href="#como-funciona">Cómo Funciona</a></li>
+                <li class="english"><a href="#how-it-works">How It Works</a></li>
+                <li class="spanish"><a href="#casos">Casos de Uso</a></li>
+                <li class="english"><a href="#cases">Use Cases</a></li>
+                <li class="spanish"><a href="#caracteristicas">Características</a></li>
+                <li class="english"><a href="#features">Features</a></li>
+                <li><a href="frontend/faq.html">FAQ</a></li>
+                <li><a href="https://multicomm.vercel.app" target="_blank">Multicomm AI</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section with Dual Focus -->
     <section class="hero">
-        <div class="hero-decoration"></div>
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Las Historias de tu Familia Viven Para Siempre</h1>
-                <p class="subtitle">Preservá la esencia de quienes amás</p>
-                <p>
-                    Capturá la voz, el rostro, los gestos y la sabiduría de tus seres queridos. 
-                    Creá un legado digital que trascienda generaciones, donde tus nietos 
-                    puedan conversar con sus abuelos como si estuvieran ahí.
-                </p>
-                <div class="hero-buttons">
-                    <a href="frontend/capturar-historia.html" class="btn-primary">
-                        <span>💝</span>
-                        <span>Capturar Historia</span>
-                    </a>
-                    <a href="frontend/chat.html" class="btn-secondary">
-                        <span>💬</span>
-                        <span>Ver Demo</span>
-                    </a>
+        <div class="hero-container">
+            <!-- Spanish Version -->
+            <div class="spanish">
+                <h1>Todas tus versiones, para siempre</h1>
+                <p class="hero-subtitle">Nunca es tarde... ni temprano para preservar tu esencia</p>
+                
+                <div class="dual-paths">
+                    <!-- Path for Elderly -->
+                    <div class="path-card">
+                        <div class="emoji">👴👵</div>
+                        <h3>Para Personas Mayores</h3>
+                        <p>Tu sabiduría es invaluable. No dejes que tus historias se vayan contigo.</p>
+                        <ul>
+                            <li>Dejá tu legado vivo para siempre</li>
+                            <li>Tus nietos siempre podrán preguntarte</li>
+                            <li>Tu experiencia guiará generaciones</li>
+                            <li>Es el momento perfecto para preservar</li>
+                        </ul>
+                        <a href="frontend/capturar-historia.html" class="btn">Preservar Mi Historia</a>
+                    </div>
+
+                    <!-- Path for Everyone -->
+                    <div class="path-card">
+                        <div class="emoji">🔄</div>
+                        <h3>Para Todas las Edades</h3>
+                        <p>Documentá tu evolución. Tu yo del futuro te lo agradecerá.</p>
+                        <ul>
+                            <li>Creá checkpoints de tu vida</li>
+                            <li>Consultá tus decisiones pasadas</li>
+                            <li>Observá tu crecimiento personal</li>
+                            <li>Construí tu timeline desde hoy</li>
+                        </ul>
+                        <a href="frontend/capturar-historia.html" class="btn">Comenzar Mi Timeline</a>
+                    </div>
+                </div>
+
+                <div class="unified-message">
+                    <h2>Un Sistema, Infinitas Conversaciones</h2>
+                    <p>Imaginá poder preguntarle a tu abuelo sobre su infancia, consultarte a vos mismo sobre decisiones pasadas, o que tus hijos conozcan todas las versiones de quien fuiste.</p>
                 </div>
             </div>
-            <div class="hero-image">
-                <div class="floating-card card-1">
-                    <div class="card-emoji">👵</div>
-                    <div class="card-text">"Abuela María"<br>87 años de historias</div>
+
+            <!-- English Version -->
+            <div class="english">
+                <h1>All your versions, forever</h1>
+                <p class="hero-subtitle">It's never too late... or too early to preserve your essence</p>
+                
+                <div class="dual-paths">
+                    <!-- Path for Elderly -->
+                    <div class="path-card">
+                        <div class="emoji">👴👵</div>
+                        <h3>For Seniors</h3>
+                        <p>Your wisdom is invaluable. Don't let your stories leave with you.</p>
+                        <ul>
+                            <li>Leave your legacy alive forever</li>
+                            <li>Your grandchildren can always ask you</li>
+                            <li>Your experience will guide generations</li>
+                            <li>It's the perfect time to preserve</li>
+                        </ul>
+                        <a href="frontend/capturar-historia.html" class="btn">Preserve My Story</a>
+                    </div>
+
+                    <!-- Path for Everyone -->
+                    <div class="path-card">
+                        <div class="emoji">🔄</div>
+                        <h3>For All Ages</h3>
+                        <p>Document your evolution. Your future self will thank you.</p>
+                        <ul>
+                            <li>Create life checkpoints</li>
+                            <li>Consult your past decisions</li>
+                            <li>Observe your personal growth</li>
+                            <li>Build your timeline starting today</li>
+                        </ul>
+                        <a href="frontend/capturar-historia.html" class="btn">Start My Timeline</a>
+                    </div>
                 </div>
-                <img src="https://images.unsplash.com/photo-1559235038-1b0fadf76f78?w=600&h=400&fit=crop" alt="Familia reunida">
-                <div class="floating-card card-2">
-                    <div class="card-emoji">✨</div>
-                    <div class="card-text">Esencia preservada<br>para siempre</div>
+
+                <div class="unified-message">
+                    <h2>One System, Infinite Conversations</h2>
+                    <p>Imagine being able to ask your grandfather about his childhood, consult yourself about past decisions, or let your children know all the versions of who you were.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="section-header">
-            <h2 class="section-title">Un Puente Entre Generaciones</h2>
-            <p class="section-subtitle">
-                Tecnología de vanguardia al servicio de lo más importante: tu familia
+    <!-- Use Cases -->
+    <section class="use-cases" id="casos">
+        <div class="use-cases-container">
+            <h2 class="spanish">Casos de Uso Reales</h2>
+            <h2 class="english">Real Use Cases</h2>
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="icon">👨‍👩‍👧‍👦</div>
+                    <h3 class="spanish">Familias</h3>
+                    <h3 class="english">Families</h3>
+                    <p class="spanish">"El abuelo murió hace 5 años, pero mis hijos todavía pueden preguntarle sobre la guerra, su infancia, sus consejos..."</p>
+                    <p class="english">"Grandpa died 5 years ago, but my children can still ask him about the war, his childhood, his advice..."</p>
+                </div>
+                <div class="case-card">
+                    <div class="icon">🎓</div>
+                    <h3 class="spanish">Decisiones de Vida</h3>
+                    <h3 class="english">Life Decisions</h3>
+                    <p class="spanish">"A los 40, le pregunté a mi yo de 25 por qué elegí esa carrera. Me recordó la pasión que había olvidado."</p>
+                    <p class="english">"At 40, I asked my 25-year-old self why I chose that career. It reminded me of the passion I had forgotten."</p>
+                </div>
+                <div class="case-card">
+                    <div class="icon">💼</div>
+                    <h3 class="spanish">Emprendedores</h3>
+                    <h3 class="english">Entrepreneurs</h3>
+                    <p class="spanish">"Documento cada etapa de mi startup. Puedo revisar exactamente qué pensaba cuando tomé cada decisión."</p>
+                    <p class="english">"I document every stage of my startup. I can review exactly what I was thinking when I made each decision."</p>
+                </div>
+                <div class="case-card">
+                    <div class="icon">📚</div>
+                    <h3 class="spanish">Memoria Histórica</h3>
+                    <h3 class="english">Historical Memory</h3>
+                    <p class="spanish">"Mi abuela vivió la inmigración. Sus bisnietos pueden escuchar la historia en sus propias palabras."</p>
+                    <p class="english">"My grandmother lived through immigration. Her great-grandchildren can hear the story in her own words."</p>
+                </div>
+                <div class="case-card">
+                    <div class="icon">💑</div>
+                    <h3 class="spanish">Parejas</h3>
+                    <h3 class="english">Couples</h3>
+                    <p class="spanish">"Grabamos nuestra historia cada aniversario. Nuestros hijos verán cómo creció nuestro amor."</p>
+                    <p class="english">"We record our story every anniversary. Our children will see how our love grew."</p>
+                </div>
+                <div class="case-card">
+                    <div class="icon">🌟</div>
+                    <h3 class="spanish">Crecimiento Personal</h3>
+                    <h3 class="english">Personal Growth</h3>
+                    <p class="spanish">"Hablo con mi yo de cada década. Es terapéutico ver mi evolución y recordar de dónde vengo."</p>
+                    <p class="english">"I talk to myself from each decade. It's therapeutic to see my evolution and remember where I come from."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Visualization -->
+    <section class="timeline-section">
+        <div class="timeline-container">
+            <h2 class="spanish">Tu Línea de Tiempo Personal</h2>
+            <h2 class="english">Your Personal Timeline</h2>
+            <p class="spanish" style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">
+                Capturá cada etapa. Cada versión tuya tiene algo único que aportar.
+            </p>
+            <p class="english" style="font-size: 1.2rem; color: #666; margin-bottom: 2rem;">
+                Capture every stage. Each version of you has something unique to contribute.
+            </p>
+            <div class="timeline-visual">
+                <div class="age-node">
+                    <span class="age">20</span>
+                    <span class="label spanish">Sueños</span>
+                    <span class="label english">Dreams</span>
+                </div>
+                <div class="age-node">
+                    <span class="age">30</span>
+                    <span class="label spanish">Decisiones</span>
+                    <span class="label english">Decisions</span>
+                </div>
+                <div class="age-node">
+                    <span class="age">40</span>
+                    <span class="label spanish">Experiencia</span>
+                    <span class="label english">Experience</span>
+                </div>
+                <div class="age-node">
+                    <span class="age">50</span>
+                    <span class="label spanish">Reflexión</span>
+                    <span class="label english">Reflection</span>
+                </div>
+                <div class="age-node">
+                    <span class="age">60+</span>
+                    <span class="label spanish">Sabiduría</span>
+                    <span class="label english">Wisdom</span>
+                </div>
+            </div>
+            <p class="spanish" style="margin-top: 2rem; font-style: italic; color: var(--warm-terracotta);">
+                "Cada edad ve el mundo diferente. Preservá todas esas perspectivas."
+            </p>
+            <p class="english" style="margin-top: 2rem; font-style: italic; color: var(--warm-terracotta);">
+                "Each age sees the world differently. Preserve all those perspectives."
             </p>
         </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon icon-memory">📖</div>
-                <h3 class="feature-title">Memorias Vivas</h3>
-                <p class="feature-description">
-                    Capturamos cada historia, anécdota y consejo. Desde la infancia hasta 
-                    los momentos más importantes, cada recuerdo se preserva con amor.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon icon-voice">👤</div>
-                <h3 class="feature-title">Su Esencia Completa</h3>
-                <p class="feature-description">
-                    Preservamos todo lo que los hace únicos: su voz, rostro, gestos, 
-                    expresiones y esa forma especial de contar las cosas.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon icon-ai">🤖</div>
-                <h3 class="feature-title">IA con Corazón</h3>
-                <p class="feature-description">
-                    Nuestra inteligencia artificial aprende la personalidad, las expresiones 
-                    y la forma de ser de tu familiar para respuestas auténticas.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon icon-family">👨‍👩‍👧‍👦</div>
-                <h3 class="feature-title">Conexión Familiar</h3>
-                <p class="feature-description">
-                    Los nietos podrán conocer a sus abuelos, hacer preguntas y recibir 
-                    consejos como si estuvieran sentados juntos.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon icon-chat">💬</div>
-                <h3 class="feature-title">Conversaciones Naturales</h3>
-                <p class="feature-description">
-                    Interface simple tipo WhatsApp. Hacé preguntas y recibí respuestas 
-                    cálidas y personales, como una charla real.
-                </p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon icon-forever">♾️</div>
-                <h3 class="feature-title">Legado Eterno</h3>
-                <p class="feature-description">
-                    Las historias y la sabiduría de tu familia permanecerán accesibles 
-                    para las futuras generaciones. Un tesoro invaluable.
-                </p>
-            </div>
-        </div>
     </section>
 
-    <!-- How it Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="section-header">
-            <h2 class="section-title">Tan Simple Como Conversar</h2>
-            <p class="section-subtitle">En solo 4 pasos, creá un legado que perdure para siempre</p>
-        </div>
-        <div class="steps-container">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3 class="step-title">Compartí Historias</h3>
-                <p class="step-description">
-                    Tu familiar cuenta sus recuerdos escribiendo o grabando audio. 
-                    Cada anécdota es un tesoro.
-                </p>
+    <!-- Features -->
+    <section class="features" id="caracteristicas">
+        <div class="features-container">
+            <h2 class="spanish">Cómo Preservamos Tu Esencia</h2>
+            <h2 class="english">How We Preserve Your Essence</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3 class="spanish">🎥 Tu Imagen y Gestos</h3>
+                    <h3 class="english">🎥 Your Image and Gestures</h3>
+                    <p class="spanish">Con tecnología de HeyGen, creamos un avatar digital que mantiene tus expresiones faciales, gestos únicos y esa forma particular de moverte al hablar.</p>
+                    <p class="english">With HeyGen technology, we create a digital avatar that maintains your facial expressions, unique gestures, and that particular way you move when speaking.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="spanish">🎙️ Tu Voz Real</h3>
+                    <h3 class="english">🎙️ Your Real Voice</h3>
+                    <p class="spanish">ElevenLabs clona tu voz con precisión asombrosa. No es una voz genérica: es TU voz, con tu tono, tu ritmo, tus pausas.</p>
+                    <p class="english">ElevenLabs clones your voice with amazing precision. It's not a generic voice: it's YOUR voice, with your tone, your rhythm, your pauses.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="spanish">🧠 Tu Conocimiento</h3>
+                    <h3 class="english">🧠 Your Knowledge</h3>
+                    <p class="spanish">Nuestro sistema RAG con IA captura tus historias, opiniones y sabiduría. Responde como vos responderías, con tu personalidad.</p>
+                    <p class="english">Our AI RAG system captures your stories, opinions, and wisdom. It responds as you would respond, with your personality.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="spanish">💬 Conversaciones Naturales</h3>
+                    <h3 class="english">💬 Natural Conversations</h3>
+                    <p class="spanish">No son respuestas pre-grabadas. La IA genera respuestas nuevas basadas en todo lo que compartiste, manteniendo tu esencia.</p>
+                    <p class="english">These aren't pre-recorded responses. AI generates new responses based on everything you shared, maintaining your essence.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="spanish">🔒 Privado y Seguro</h3>
+                    <h3 class="english">🔒 Private and Secure</h3>
+                    <p class="spanish">Cada familia tiene su espacio privado. Vos decidís quién puede acceder a tus memorias y conversaciones.</p>
+                    <p class="english">Each family has their private space. You decide who can access your memories and conversations.</p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="spanish">♾️ Para Siempre</h3>
+                    <h3 class="english">♾️ Forever</h3>
+                    <p class="spanish">Una vez creado, tu avatar digital vive para siempre. Generaciones futuras podrán conocerte tal como eras.</p>
+                    <p class="english">Once created, your digital avatar lives forever. Future generations will be able to know you as you were.</p>
+                </div>
             </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3 class="step-title">Grabá un Video</h3>
-                <p class="step-description">
-                    Un simple video de 2-3 minutos para capturar su imagen y voz. 
-                    La IA hace el resto de la magia.
-                </p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3 class="step-title">Procesamos con Amor</h3>
-                <p class="step-description">
-                    Nuestra IA aprende su forma de hablar, sus expresiones y 
-                    su personalidad única.
-                </p>
-            </div>
-            <div class="step">
-                <div class="step-number">4</div>
-                <h3 class="step-title">Conversá Siempre</h3>
-                <p class="step-description">
-                    La familia puede hacer preguntas y recibir respuestas como si 
-                    estuvieran juntos de nuevo.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonial -->
-    <section class="testimonial" id="testimonial">
-        <div class="section-header">
-            <h2 class="section-title">Historias que Tocan el Corazón</h2>
-        </div>
-        <div class="testimonial-card">
-            <div class="quote-icon">"</div>
-            <p class="testimonial-text">
-                Mi papá falleció hace 2 años. Hoy mi hija de 5 años puede preguntarle 
-                sobre su vida y escuchar sus consejos con su propia voz. Es como si 
-                nunca se hubiera ido. No hay palabras para agradecer este regalo.
-            </p>
-            <p class="testimonial-author">— Lucía M., Buenos Aires</p>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="cta-content">
-            <h2>El Tiempo es Ahora</h2>
-            <p>
-                Cada día que pasa es una oportunidad perdida de preservar la esencia de quienes amás. 
-                No esperes más para crear este regalo eterno para tu familia.
-            </p>
-            <div class="cta-buttons">
-                <a href="frontend/capturar-historia.html" class="btn-white">
-                    Comenzar a Preservar Memorias
-                </a>
-                <a href="frontend/chat.html" class="btn-white">
-                    Ver Demostración
-                </a>
+    <section class="cta">
+        <h2 class="spanish">El Tiempo No Espera</h2>
+        <h2 class="english">Time Doesn't Wait</h2>
+        <p class="spanish">Cada día que pasa es una oportunidad perdida de preservar memorias invaluables</p>
+        <p class="english">Every passing day is a lost opportunity to preserve invaluable memories</p>
+        <div class="cta-buttons">
+            <a href="frontend/capturar-historia.html" class="btn">
+                <span class="spanish">Comenzar Ahora</span>
+                <span class="english">Start Now</span>
+            </a>
+            <a href="frontend/chat.html" class="btn btn-secondary">
+                <span class="spanish">Ver Demo</span>
+                <span class="english">See Demo</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="testimonial">
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <span class="quote-icon">"</span>
+                <p class="testimonial-text spanish">
+                    Mi papá falleció cuando mi hija tenía 2 años. Gracias a Cómo Sucedió, ella puede preguntarle sobre nuestra historia familiar, pedirle consejos, conocer sus chistes... Es como si nunca se hubiera ido. Y yo también grabé mi historia a los 30, 40 y ahora a los 50. Es fascinante ver mi propia evolución.
+                </p>
+                <p class="testimonial-text english">
+                    My dad passed away when my daughter was 2 years old. Thanks to How It Happened, she can ask him about our family history, ask for advice, hear his jokes... It's like he never left. And I also recorded my story at 30, 40, and now at 50. It's fascinating to see my own evolution.
+                </p>
+                <p class="testimonial-author">— María González, 52</p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-logo">Voces que Perduran</div>
-            <p class="footer-text">
-                Preservando las memorias más preciadas de tu familia con tecnología y amor
-            </p>
-            <div class="footer-links">
-                <a href="#">Privacidad</a>
-                <a href="#">Términos</a>
-                <a href="#">Contacto</a>
-                <a href="#">Preguntas Frecuentes</a>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Cómo Sucedió</h3>
+                <p class="spanish">Preservando la esencia humana a través de la tecnología. Cada historia, cada versión, cada momento de tu vida merece ser recordado.</p>
+                <p class="english">Preserving human essence through technology. Every story, every version, every moment of your life deserves to be remembered.</p>
+                <p style="margin-top: 1rem;">
+                    <span class="spanish">Un proyecto de </span>
+                    <span class="english">A project by </span>
+                    <a href="https://multicomm.vercel.app" style="color: var(--warm-terracotta);">Multicomm AI</a>
+                </p>
             </div>
-            <p class="multicomm-credit">
-                Un proyecto especial de <a href="https://multicomm.vercel.app" target="_blank">Multicomm.ai</a>
-            </p>
+            <div class="footer-links">
+                <h4 class="spanish">Enlaces Rápidos</h4>
+                <h4 class="english">Quick Links</h4>
+                <ul>
+                    <li><a href="frontend/capturar-historia.html">
+                        <span class="spanish">Comenzar</span>
+                        <span class="english">Start</span>
+                    </a></li>
+                    <li><a href="frontend/chat.html">Demo</a></li>
+                    <li><a href="frontend/guia-video.html">
+                        <span class="spanish">Guía de Video</span>
+                        <span class="english">Video Guide</span>
+                    </a></li>
+                    <li><a href="frontend/faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4 class="spanish">Recursos</h4>
+                <h4 class="english">Resources</h4>
+                <ul>
+                    <li><a href="#">
+                        <span class="spanish">Privacidad</span>
+                        <span class="english">Privacy</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="spanish">Términos</span>
+                        <span class="english">Terms</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="spanish">Contacto</span>
+                        <span class="english">Contact</span>
+                    </a></li>
+                    <li><a href="#">
+                        <span class="spanish">Soporte</span>
+                        <span class="english">Support</span>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Cómo Sucedió - Multicomm AI. <span class="spanish">Todos los derechos reservados.</span><span class="english">All rights reserved.</span></p>
         </div>
     </footer>
 
     <script>
-        // Smooth scroll for navigation links
+        // Language toggle
+        function toggleLanguage() {
+            document.body.classList.toggle('en');
+        }
+
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -810,45 +978,42 @@
 
         // Navbar background on scroll
         window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
             } else {
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.05)';
             }
         });
 
-        // Intersection Observer for animations
+        // Animate elements on scroll
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
+            rootMargin: '0px 0px -50px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 0.8s ease';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
 
-        // Observe feature cards
-        document.querySelectorAll('.feature-card').forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-            observer.observe(card);
-        });
-
-        // Observe steps
-        document.querySelectorAll('.step').forEach((step, index) => {
-            step.style.opacity = '0';
-            step.style.transform = 'translateY(30px)';
-            step.style.transition = `all 0.6s ease ${index * 0.15}s`;
-            observer.observe(step);
+        // Observe all cards and sections
+        document.querySelectorAll('.path-card, .case-card, .feature-card, .age-node').forEach(el => {
+            observer.observe(el);
         });
     </script>
 </body>
