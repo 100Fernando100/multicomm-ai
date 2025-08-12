@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preguntas Frecuentes - Cómo Sucedió | Multicomm AI</title>
+    <title>Multicomm.ai - AI-Powered Business Communication</title>
     <style>
         * {
             margin: 0;
@@ -11,765 +11,791 @@
             box-sizing: border-box;
         }
         
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --warm-terracotta: #E07B4F;
-            --soft-cream: #FFF8F3;
-            --sage-green: #7C9885;
-            --deep-brown: #5C4033;
-            --light-gray: #F7F7F7;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #1a1a1a;
             line-height: 1.6;
-            color: #333;
-            background: var(--soft-cream);
-        }
-        
-        /* Language Toggle */
-        .language-toggle {
-            position: fixed;
-            top: 90px;
-            right: 20px;
-            background: white;
-            padding: 8px 15px;
-            border-radius: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            cursor: pointer;
-            z-index: 1001;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        
-        .language-toggle:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-        
-        /* Hide English content by default */
-        .english {
-            display: none;
-        }
-        
-        body.en .spanish {
-            display: none;
-        }
-        
-        body.en .english {
-            display: block;
         }
         
         /* Navigation */
-        nav {
-            position: fixed;
+        .main-nav {
+            background: #ffffff;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
         
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .logo {
+        .nav-logo a {
             font-size: 1.5rem;
-            font-weight: bold;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            color: #4B8BF5;
+            text-decoration: none;
         }
         
         .nav-links {
             display: flex;
-            gap: 2rem;
-            list-style: none;
             align-items: center;
+            gap: 2rem;
         }
         
         .nav-links a {
-            color: #333;
+            color: #1a1a1a;
             text-decoration: none;
-            transition: color 0.3s;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
         
         .nav-links a:hover {
-            color: var(--warm-terracotta);
+            color: #4B8BF5;
         }
         
-        /* FAQ Section */
-        .faq-hero {
-            margin-top: 80px;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, var(--soft-cream) 0%, #FFF 50%, var(--soft-cream) 100%);
-            text-align: center;
+        /* Dropdown Styles */
+        .nav-dropdown {
+            position: relative;
         }
         
-        .faq-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: var(--primary-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .faq-hero p {
-            font-size: 1.3rem;
-            color: var(--deep-brown);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        /* FAQ Categories */
-        .faq-categories {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin: 3rem 0;
-            flex-wrap: wrap;
-            padding: 0 2rem;
-        }
-        
-        .category-btn {
-            padding: 0.8rem 1.5rem;
-            border: 2px solid var(--warm-terracotta);
-            background: white;
-            color: var(--warm-terracotta);
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            font-size: 1rem;
-        }
-        
-        .category-btn:hover,
-        .category-btn.active {
-            background: var(--warm-terracotta);
-            color: white;
-            transform: scale(1.05);
-        }
-        
-        /* FAQ Container */
-        .faq-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .faq-category-section {
-            display: none;
-            animation: fadeIn 0.5s;
-        }
-        
-        .faq-category-section.active {
-            display: block;
-        }
-        
-        .faq-item {
-            background: white;
-            margin-bottom: 1.5rem;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-        }
-        
-        .faq-item:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-        }
-        
-        .faq-question {
-            padding: 1.5rem;
+        .nav-dropdown-trigger {
             cursor: pointer;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-weight: 600;
-            color: var(--deep-brown);
-            transition: all 0.3s;
+            gap: 0.5rem;
         }
         
-        .faq-question:hover {
-            color: var(--warm-terracotta);
+        .nav-dropdown-trigger::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
         }
         
-        .faq-question::after {
-            content: '+';
-            font-size: 1.5rem;
-            color: var(--warm-terracotta);
-            transition: transform 0.3s;
+        .nav-dropdown:hover .nav-dropdown-trigger::after {
+            transform: rotate(180deg);
         }
         
-        .faq-item.active .faq-question::after {
-            transform: rotate(45deg);
-        }
-        
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-        
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-        }
-        
-        .faq-answer-content {
-            padding: 0 1.5rem 1.5rem;
-            color: #666;
-            line-height: 1.8;
-        }
-        
-        .faq-answer-content ul {
-            margin-left: 1.5rem;
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 0.5rem 0;
             margin-top: 0.5rem;
         }
         
-        .faq-answer-content li {
-            margin-bottom: 0.5rem;
+        .nav-dropdown:hover .dropdown-content {
+            display: block;
         }
         
-        /* CTA Section */
-        .faq-cta {
-            background: var(--primary-gradient);
+        .dropdown-content a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #1a1a1a;
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown-content a:hover {
+            background: #f5f5f5;
+            color: #4B8BF5;
+        }
+        
+        .highlight-orange {
+            color: #E07B4F !important;
+            font-weight: 600;
+        }
+        
+        .highlight-orange:hover {
+            background: rgba(224, 123, 79, 0.1) !important;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: #4B8BF5;
             color: white;
-            padding: 3rem 2rem;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #3a7ae4;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(75, 139, 245, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
             text-align: center;
-            margin-top: 4rem;
-            border-radius: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
         }
         
-        .faq-cta h2 {
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #4B8BF5;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        /* Workflow Section - Updated Styles */
+        .workflow-section {
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .connection-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #4ECDC4;
+            border-radius: 50%;
+            z-index: 3;
+        }
+        
+        @keyframes moveAlong1 {
+            0% { left: 25%; top: 50%; }
+            100% { left: 75%; top: 50%; }
+        }
+        
+        @keyframes moveAlong2 {
+            0% { left: 40%; top: 30%; }
+            100% { left: 50%; top: 80%; }
+        }
+        
+        @keyframes moveAlong3 {
+            0% { left: 50%; top: 20%; }
+            100% { left: 75%; top: 50%; }
+        }
+        
+        /* Services Section */
+        .services-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .service-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: #4B8BF5;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
             font-size: 2rem;
+        }
+        
+        .service-card h3 {
+            font-size: 1.25rem;
             margin-bottom: 1rem;
         }
         
-        .faq-cta p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
         }
         
-        .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
+        /* Other Projects Section */
+        .other-projects-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-card.featured {
+            border: 2px solid #E07B4F;
+        }
+        
+        .icon-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon {
+            font-size: 2.5rem;
+        }
+        
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+        
+        .project-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-link {
+            color: #4B8BF5;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            display: inline-block;
-            background: white;
-            color: var(--warm-terracotta);
         }
         
-        .btn:hover {
+        .badge-live {
+            background: #E07B4F;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            font-weight: 700;
+        }
+        
+        /* Future Projects Section */
+        .future-projects-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid #4B8BF5;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #4B8BF5;
+            margin: 1rem 0;
+        }
+        
+        .pricing-card .price span {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+        
+        .pricing-features li {
+            padding: 0.5rem 0;
+            color: #666;
+        }
+        
+        /* Investor Relations Section */
+        .investor-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .metric-card {
+            text-align: center;
+        }
+        
+        .metric-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4B8BF5;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
         }
         
         /* Footer */
         footer {
-            background: var(--deep-brown);
+            background: #1a1a1a;
             color: white;
-            padding: 2rem;
+            padding: 3rem 0;
             text-align: center;
-            margin-top: 4rem;
         }
         
-        footer a {
-            color: var(--warm-terracotta);
-            text-decoration: none;
+        footer p {
+            opacity: 0.7;
         }
         
-        /* Responsive */
-        @media (max-width: 768px) {
-            .faq-hero h1 {
-                font-size: 2rem;
-            }
-            
-            .faq-categories {
-                gap: 0.5rem;
-            }
-            
-            .category-btn {
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .language-toggle {
-                top: 15px;
-            }
+        /* Beta CTA */
+        .beta-cta {
+            background: linear-gradient(135deg, #4B8BF5 0%, #96CEB4 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .beta-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .beta-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
         }
     </style>
 </head>
 <body>
-    <!-- Language Toggle -->
-    <div class="language-toggle" onclick="toggleLanguage()">
-        🌐 ES/EN
-    </div>
-
     <!-- Navigation -->
-    <nav>
+    <nav class="main-nav">
         <div class="nav-container">
-            <div class="logo">Cómo Sucedió - FAQ</div>
-            <ul class="nav-links">
-                <li><a href="../../index.html">
-                    <span class="spanish">Inicio</span>
-                    <span class="english">Home</span>
-                </a></li>
-                <li><a href="capturar-historia.html">
-                    <span class="spanish">Capturar Historia</span>
-                    <span class="english">Capture Story</span>
-                </a></li>
-                <li><a href="chat.html">Demo</a></li>
-                <li><a href="https://multicomm.vercel.app">Multicomm AI</a></li>
-            </ul>
+            <div class="nav-logo">
+                <a href="/">Multicomm.ai</a>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#investor">Investor Relations</a>
+                
+                <!-- Other Projects Dropdown -->
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-trigger">Other Projects</a>
+                    <div class="dropdown-content">
+                        <a href="/ai-news">AI News</a>
+                        <a href="https://multicomm-ai.vercel.app" class="highlight-orange">How It Happened (Live)</a>
+                        <a href="/predictive-analytics">Predictive Analytics</a>
+                    </div>
+                </div>
+                
+                <!-- Future Projects Dropdown -->
+                <div class="nav-dropdown">
+                    <a href="#" class="nav-dropdown-trigger">Future Projects</a>
+                    <div class="dropdown-content">
+                        <a href="#mechanic-assistant">Mechanic Assistant</a>
+                        <a href="#dentist-ai">Dentist AI</a>
+                        <a href="#law-code">Law Code</a>
+                        <a href="#financial-intelligence">Integrated Financial Intelligence</a>
+                    </div>
+                </div>
+                
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="nav-actions">
+                <img src="/flag-us.svg" alt="US" class="flag-icon">
+                <img src="/flag-es.svg" alt="ES" class="flag-icon">
+                <button class="btn-primary">Get Started</button>
+            </div>
         </div>
     </nav>
 
-    <!-- FAQ Hero -->
-    <section class="faq-hero">
-        <h1 class="spanish">Preguntas Frecuentes</h1>
-        <h1 class="english">Frequently Asked Questions</h1>
-        <p class="spanish">Todo lo que necesitás saber sobre preservar tu esencia digital</p>
-        <p class="english">Everything you need to know about preserving your digital essence</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Book an appointment. Update a CRM. Send a text. All in one workflow.</h1>
+            <p>Pathways are the brain of your business. We integrate into your existing systems, whether it's a scheduler, ERP, or CRM, so your agents don't just talk, they take action.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary">Try Live Demo</button>
+                <button class="btn-secondary">Schedule Consultation</button>
+            </div>
+        </div>
     </section>
 
-    <!-- FAQ Categories -->
-    <div class="faq-categories">
-        <button class="category-btn active" onclick="showCategory('general')">
-            <span class="spanish">General</span>
-            <span class="english">General</span>
-        </button>
-        <button class="category-btn" onclick="showCategory('technical')">
-            <span class="spanish">Técnico</span>
-            <span class="english">Technical</span>
-        </button>
-        <button class="category-btn" onclick="showCategory('privacy')">
-            <span class="spanish">Privacidad</span>
-            <span class="english">Privacy</span>
-        </button>
-        <button class="category-btn" onclick="showCategory('pricing')">
-            <span class="spanish">Precios</span>
-            <span class="english">Pricing</span>
-        </button>
-    </div>
-
-    <!-- FAQ Content -->
-    <div class="faq-container">
-        <!-- General Category -->
-        <div class="faq-category-section active" id="general">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Qué es exactamente "Cómo Sucedió"?</span>
-                    <span class="english">What exactly is "How It Happened"?</span>
+    <!-- How It Works -->
+    <section class="workflow-section" style="background: linear-gradient(135deg, #1a1a3e 0%, #3d1a4a 50%, #1a1a3e 100%);">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Your AI Workflow in Action</h2>
+            <div style="position: relative; height: 500px; max-width: 900px; margin: 0 auto;">
+                <!-- Connection lines will be drawn here -->
+                <svg style="position: absolute; width: 100%; height: 100%; z-index: 1;">
+                    <line x1="25%" y1="50%" x2="40%" y2="25%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                    <line x1="40%" y1="25%" x2="60%" y2="15%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                    <line x1="60%" y1="15%" x2="75%" y2="50%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                    <line x1="25%" y1="50%" x2="50%" y2="80%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                    <line x1="50%" y1="80%" x2="75%" y2="50%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                    <line x1="40%" y1="25%" x2="50%" y2="80%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                    <line x1="60%" y1="15%" x2="50%" y2="80%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                    <line x1="25%" y1="50%" x2="75%" y2="50%" stroke="rgba(78, 205, 196, 0.3)" stroke-width="2"/>
+                </svg>
+                
+                <!-- Workflow nodes with larger icons -->
+                <div style="position: absolute; left: 25%; top: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: #FF8A56; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2;">
+                    📞
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            "Cómo Sucedió" es un sistema revolucionario que preserva tu esencia completa - tu imagen, voz, conocimientos y personalidad - en un avatar digital interactivo. No es solo una grabación; es una IA que puede mantener conversaciones reales basadas en todo lo que compartiste, permitiendo que futuras generaciones (o tu yo futuro) conversen contigo como si estuvieras presente.
-                        </p>
-                        <p class="english">
-                            "How It Happened" is a revolutionary system that preserves your complete essence - your image, voice, knowledge, and personality - in an interactive digital avatar. It's not just a recording; it's an AI that can have real conversations based on everything you shared, allowing future generations (or your future self) to converse with you as if you were present.
-                        </p>
-                    </div>
+                <div style="position: absolute; left: 40%; top: 25%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: #BB8FCE; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2;">
+                    🤖
                 </div>
+                <div style="position: absolute; left: 60%; top: 15%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: #5B9FEF; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2;">
+                    📊
+                </div>
+                <div style="position: absolute; left: 50%; top: 80%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: #4ECDC4; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2;">
+                    💬
+                </div>
+                <div style="position: absolute; left: 75%; top: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: #FF8A56; border-radius: 30px; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 2;">
+                    ✅
+                </div>
+                
+                <!-- Animated dots on connections -->
+                <div class="connection-dot" style="animation: moveAlong1 3s infinite linear;"></div>
+                <div class="connection-dot" style="animation: moveAlong2 3s infinite linear;"></div>
+                <div class="connection-dot" style="animation: moveAlong3 3s infinite linear;"></div>
             </div>
+            <p style="text-align: center; color: rgba(255,255,255,0.9); max-width: 800px; margin: 2rem auto 0;">
+                Our comprehensive communication tools enable businesses to reach customers through their preferred channels. 
+                From automated voice calls with natural speech synthesis to intelligent SMS campaigns, we ensure your message is delivered effectively.
+            </p>
+        </div>
+    </section>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Para quién está diseñado este servicio?</span>
-                    <span class="english">Who is this service designed for?</span>
+    <!-- Core Services -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title">Our Core Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon" style="background: #4ECDC4;">📞</div>
+                    <h3>Voice & SMS Automation</h3>
+                    <p>Automated calls and text messaging with intelligent routing and natural language processing.</p>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Está diseñado para todos, pero especialmente para:
-                        </p>
-                        <p class="english">
-                            It's designed for everyone, but especially for:
-                        </p>
-                        <ul>
-                            <li class="spanish"><strong>Personas mayores:</strong> Para preservar su sabiduría y que sus nietos siempre puedan consultarles</li>
-                            <li class="english"><strong>Seniors:</strong> To preserve their wisdom so grandchildren can always consult them</li>
-                            <li class="spanish"><strong>Familias:</strong> Para mantener vivas las historias familiares</li>
-                            <li class="english"><strong>Families:</strong> To keep family stories alive</li>
-                            <li class="spanish"><strong>Emprendedores:</strong> Para documentar su journey y decisiones</li>
-                            <li class="english"><strong>Entrepreneurs:</strong> To document their journey and decisions</li>
-                            <li class="spanish"><strong>Cualquier persona:</strong> Que quiera crear checkpoints de su vida</li>
-                            <li class="english"><strong>Anyone:</strong> Who wants to create life checkpoints</li>
-                        </ul>
-                    </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: #96CEB4;">📧</div>
+                    <h3>Email Intelligence</h3>
+                    <p>Smart email campaigns with AI-driven personalization and automated responses.</p>
                 </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Cómo es diferente de un video normal?</span>
-                    <span class="english">How is it different from a regular video?</span>
+                <div class="service-card">
+                    <div class="service-icon" style="background: #F7DC6F;">📅</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Seamless appointment booking with calendar integration and automated reminders.</p>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Un video es estático y unidireccional. Nuestro sistema crea un avatar interactivo que puede:
-                        </p>
-                        <p class="english">
-                            A video is static and one-directional. Our system creates an interactive avatar that can:
-                        </p>
-                        <ul>
-                            <li class="spanish">Responder preguntas nuevas que nunca fueron grabadas</li>
-                            <li class="english">Answer new questions that were never recorded</li>
-                            <li class="spanish">Mantener conversaciones naturales y fluidas</li>
-                            <li class="english">Maintain natural, fluid conversations</li>
-                            <li class="spanish">Adaptar sus respuestas según el contexto</li>
-                            <li class="english">Adapt responses according to context</li>
-                            <li class="spanish">Recordar información compartida y conectar ideas</li>
-                            <li class="english">Remember shared information and connect ideas</li>
-                        </ul>
-                    </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: #BB8FCE;">🎬</div>
+                    <h3>AI Video Intelligence</h3>
+                    <p>Create personalized AI-generated videos for customer engagement and marketing campaigns.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: #85C1E2;">🌍</div>
+                    <h3>Multi-language Support</h3>
+                    <p>Communicate seamlessly in 8+ languages with real-time translation.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: #F8C471;">🎙️</div>
+                    <h3>Ultra-Realistic Voice AI</h3>
+                    <p>Human-like voice synthesis for calls and messages with emotion detection.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: #ABEBC6;">🤖</div>
+                    <h3>OpenAI Integration</h3>
+                    <p>Advanced language understanding and natural conversation capabilities powered by ChatGPT.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon" style="background: #FAD7A0;">💭</div>
+                    <h3>Sentiment Analysis</h3>
+                    <p>Real-time emotion detection and customer satisfaction monitoring.</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Technical Category -->
-        <div class="faq-category-section" id="technical">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Qué tecnología utilizan?</span>
-                    <span class="english">What technology do you use?</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Utilizamos tecnología de vanguardia:
-                        </p>
-                        <p class="english">
-                            We use cutting-edge technology:
-                        </p>
-                        <ul>
-                            <li class="spanish"><strong>HeyGen:</strong> Para crear avatares digitales realistas con tus gestos</li>
-                            <li class="english"><strong>HeyGen:</strong> To create realistic digital avatars with your gestures</li>
-                            <li class="spanish"><strong>ElevenLabs:</strong> Para clonar tu voz con precisión asombrosa</li>
-                            <li class="english"><strong>ElevenLabs:</strong> To clone your voice with amazing precision</li>
-                            <li class="spanish"><strong>IA con RAG:</strong> Para procesar y entender tu conocimiento</li>
-                            <li class="english"><strong>AI with RAG:</strong> To process and understand your knowledge</li>
-                            <li class="spanish"><strong>Multicomm AI:</strong> Nuestra plataforma propietaria que integra todo</li>
-                            <li class="english"><strong>Multicomm AI:</strong> Our proprietary platform that integrates everything</li>
-                        </ul>
+    <!-- Other Projects -->
+    <section class="other-projects-section">
+        <div class="container">
+            <h2 class="section-title">Other Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="icon-container" style="background: #F7B731;">
+                        <span class="icon">📰</span>
                     </div>
+                    <h3>AI News</h3>
+                    <p>Exclusive AI-generated news discovery. Our AI journalists work 24/7 to uncover stories that mainstream media misses.</p>
+                    <a href="/ai-news" class="project-link">Explore AI News →</a>
                 </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Cuánto tiempo lleva crear mi avatar?</span>
-                    <span class="english">How long does it take to create my avatar?</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            El proceso completo incluye:
-                        </p>
-                        <p class="english">
-                            The complete process includes:
-                        </p>
-                        <ul>
-                            <li class="spanish"><strong>Sesión inicial:</strong> 2-3 horas de grabación</li>
-                            <li class="english"><strong>Initial session:</strong> 2-3 hours of recording</li>
-                            <li class="spanish"><strong>Procesamiento:</strong> 24-48 horas para crear el avatar</li>
-                            <li class="english"><strong>Processing:</strong> 24-48 hours to create the avatar</li>
-                            <li class="spanish"><strong>Revisión:</strong> 1 hora para ajustes finales</li>
-                            <li class="english"><strong>Review:</strong> 1 hour for final adjustments</li>
-                            <li class="spanish"><strong>Total:</strong> En 3 días tenés tu avatar listo</li>
-                            <li class="english"><strong>Total:</strong> In 3 days your avatar is ready</li>
-                        </ul>
+                
+                <div class="project-card featured">
+                    <div class="icon-container" style="background: #E07B4F;">
+                        <span class="icon">🎥</span>
                     </div>
+                    <h3>How It Happened <span class="badge-live">LIVE</span></h3>
+                    <p>Experience history through data-driven narratives. Transform raw historical data into compelling, interactive stories.</p>
+                    <a href="https://multicomm-ai.vercel.app" class="project-link" style="color: #4B8BF5;">Watch Demo Video →</a>
                 </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Qué necesito para la grabación?</span>
-                    <span class="english">What do I need for recording?</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Solo necesitás:
-                        </p>
-                        <p class="english">
-                            You only need:
-                        </p>
-                        <ul>
-                            <li class="spanish">Una computadora o smartphone con cámara</li>
-                            <li class="english">A computer or smartphone with camera</li>
-                            <li class="spanish">Conexión a internet estable</li>
-                            <li class="english">Stable internet connection</li>
-                            <li class="spanish">Un lugar tranquilo sin ruido de fondo</li>
-                            <li class="english">A quiet place without background noise</li>
-                            <li class="spanish">2-3 horas de tu tiempo</li>
-                            <li class="english">2-3 hours of your time</li>
-                        </ul>
-                        <p class="spanish">
-                            Nosotros te guiamos paso a paso durante todo el proceso.
-                        </p>
-                        <p class="english">
-                            We guide you step by step throughout the process.
-                        </p>
+                
+                <div class="project-card">
+                    <div class="icon-container" style="background: #5F27CD;">
+                        <span class="icon">📈</span>
                     </div>
+                    <h3>Predictive Analytics</h3>
+                    <p>Harness machine learning to anticipate customer needs and optimize communication strategies in real-time.</p>
+                    <a href="/predictive-analytics" class="project-link">Learn More →</a>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Privacy Category -->
-        <div class="faq-category-section" id="privacy">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Qué tan segura es mi información?</span>
-                    <span class="english">How secure is my information?</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Tu privacidad es nuestra prioridad:
-                        </p>
-                        <p class="english">
-                            Your privacy is our priority:
-                        </p>
-                        <ul>
-                            <li class="spanish">Encriptación de nivel bancario para todos los datos</li>
-                            <li class="english">Bank-level encryption for all data</li>
-                            <li class="spanish">Servidores seguros con respaldo múltiple</li>
-                            <li class="english">Secure servers with multiple backups</li>
-                            <li class="spanish">Control total sobre quién accede a tu avatar</li>
-                            <li class="english">Full control over who accesses your avatar</li>
-                            <li class="spanish">Cumplimos con GDPR y regulaciones de privacidad</li>
-                            <li class="english">We comply with GDPR and privacy regulations</li>
-                        </ul>
+    <!-- Future Projects -->
+    <section class="future-projects-section">
+        <div class="container">
+            <h2 class="section-title">Future Projects</h2>
+            <div class="projects-grid" style="grid-template-columns: repeat(4, 1fr); max-width: 1200px; margin: 0 auto;">
+                <div class="project-card">
+                    <div class="icon-container" style="background: #FF6B6B;">
+                        <span class="icon">🔧</span>
                     </div>
+                    <h3>Mechanic Assistant</h3>
+                    <p>AI-powered automotive diagnostics with predictive maintenance alerts and cost estimates.</p>
+                </div>
+                
+                <div class="project-card">
+                    <div class="icon-container" style="background: #4ECDC4;">
+                        <span class="icon">🦷</span>
+                    </div>
+                    <h3>Dentist AI</h3>
+                    <p>Revolutionize dental care with AI-driven diagnostics and automated patient management.</p>
+                </div>
+                
+                <div class="project-card">
+                    <div class="icon-container" style="background: #45B7D1;">
+                        <span class="icon">⚖️</span>
+                    </div>
+                    <h3>Law Code</h3>
+                    <p>Intelligent legal document analysis with automatic clause extraction and risk identification.</p>
+                </div>
+                
+                <div class="project-card">
+                    <div class="icon-container" style="background: #96CEB4;">
+                        <span class="icon">📊</span>
+                    </div>
+                    <h3>Integrated Financial Intelligence</h3>
+                    <p>Combine predictive analytics, document intelligence, and stress testing in one platform.</p>
                 </div>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Quién puede acceder a mi avatar?</span>
-                    <span class="english">Who can access my avatar?</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Vos tenés control total:
-                        </p>
-                        <p class="english">
-                            You have full control:
-                        </p>
-                        <ul>
-                            <li class="spanish">Podés crear una lista de personas autorizadas</li>
-                            <li class="english">You can create a list of authorized people</li>
-                            <li class="spanish">Cada persona recibe un acceso único</li>
-                            <li class="english">Each person receives unique access</li>
-                            <li class="spanish">Podés revocar accesos en cualquier momento</li>
-                            <li class="english">You can revoke access at any time</li>
-                            <li class="spanish">Opción de hacer cierta información pública o privada</li>
-                            <li class="english">Option to make certain information public or private</li>
-                        </ul>
-                    </div>
-                </div>
+            
+            <div class="beta-cta">
+                <h2>Be Part of the Future</h2>
+                <p>Join our beta program and get early access to cutting-edge features before they launch.</p>
+                <button class="btn-secondary">Join Beta Program</button>
             </div>
+        </div>
+    </section>
 
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Puedo eliminar mi avatar?</span>
-                    <span class="english">Can I delete my avatar?</span>
+    <!-- Pricing -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <p>Perfect for small businesses getting started</p>
+                    <div class="price">$99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Up to 1,000 messages/month</li>
+                        <li>Basic automation features</li>
+                        <li>Email support</li>
+                        <li>API access</li>
+                        <li>2 team members</li>
+                    </ul>
+                    <button class="btn-primary">Get Started</button>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Sí, mantenés control total sobre tu información. Podés solicitar la eliminación completa en cualquier momento, aunque recomendamos considerar el valor que puede tener para futuras generaciones.
-                        </p>
-                        <p class="english">
-                            Yes, you maintain full control over your information. You can request complete deletion at any time, though we recommend considering the value it may have for future generations.
-                        </p>
-                    </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <p>For growing teams that need more power</p>
+                    <div class="price">$299<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Up to 10,000 messages/month</li>
+                        <li>Advanced AI features</li>
+                        <li>Priority support</li>
+                        <li>Custom integrations</li>
+                        <li>Analytics dashboard</li>
+                        <li>10 team members</li>
+                    </ul>
+                    <button class="btn-primary">Get Started</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <p>Custom solutions for large organizations</p>
+                    <div class="price">Custom</div>
+                    <ul class="pricing-features">
+                        <li>Unlimited messages</li>
+                        <li>Dedicated account manager</li>
+                        <li>24/7 phone support</li>
+                        <li>Custom AI training</li>
+                        <li>SLA guarantee</li>
+                        <li>On-premise deployment</li>
+                    </ul>
+                    <button class="btn-primary">Contact Sales</button>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Pricing Category -->
-        <div class="faq-category-section" id="pricing">
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Cuánto cuesta el servicio?</span>
-                    <span class="english">How much does the service cost?</span>
+    <!-- Investor Relations -->
+    <section class="investor-section" id="investor">
+        <div class="container">
+            <h2 class="section-title">Investor Relations</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 3rem;">
+                Multicomm.ai is revolutionizing business communication through AI-powered automation. 
+                Our platform integrates seamlessly with existing business systems to create intelligent workflows.
+            </p>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">📈</div>
+                    <div class="metric-value">250%</div>
+                    <div class="metric-label">YoY Growth</div>
                 </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Ofrecemos diferentes planes según tus necesidades:
-                        </p>
-                        <p class="english">
-                            We offer different plans according to your needs:
-                        </p>
-                        <ul>
-                            <li class="spanish"><strong>Plan Básico:</strong> Avatar con conversaciones limitadas</li>
-                            <li class="english"><strong>Basic Plan:</strong> Avatar with limited conversations</li>
-                            <li class="spanish"><strong>Plan Familiar:</strong> Acceso ilimitado para toda la familia</li>
-                            <li class="english"><strong>Family Plan:</strong> Unlimited access for the whole family</li>
-                            <li class="spanish"><strong>Plan Legacy:</strong> Preservación garantizada por 100 años</li>
-                            <li class="english"><strong>Legacy Plan:</strong> Guaranteed preservation for 100 years</li>
-                        </ul>
-                        <p class="spanish">
-                            Contactanos para una consulta personalizada y precios específicos.
-                        </p>
-                        <p class="english">
-                            Contact us for a personalized consultation and specific pricing.
-                        </p>
-                    </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🏢</div>
+                    <div class="metric-value">150+</div>
+                    <div class="metric-label">Enterprise Clients</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">💬</div>
+                    <div class="metric-value">10M+</div>
+                    <div class="metric-label">Messages/Month</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">🌍</div>
+                    <div class="metric-value">25</div>
+                    <div class="metric-label">Countries Served</div>
                 </div>
             </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Hay costos adicionales?</span>
-                    <span class="english">Are there additional costs?</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            El precio incluye todo: grabación, procesamiento, almacenamiento y acceso. No hay costos ocultos. Las actualizaciones futuras de tu avatar (agregar nuevas historias o momentos) tienen un costo reducido.
-                        </p>
-                        <p class="english">
-                            The price includes everything: recording, processing, storage, and access. There are no hidden costs. Future updates to your avatar (adding new stories or moments) have a reduced cost.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span class="spanish">¿Ofrecen descuentos?</span>
-                    <span class="english">Do you offer discounts?</span>
-                </div>
-                <div class="faq-answer">
-                    <div class="faq-answer-content">
-                        <p class="spanish">
-                            Sí, ofrecemos:
-                        </p>
-                        <p class="english">
-                            Yes, we offer:
-                        </p>
-                        <ul>
-                            <li class="spanish">Descuentos para personas mayores de 65 años</li>
-                            <li class="english">Discounts for people over 65</li>
-                            <li class="spanish">Planes grupales para familias</li>
-                            <li class="english">Group plans for families</li>
-                            <li class="spanish">Promociones especiales en fechas importantes</li>
-                            <li class="english">Special promotions on important dates</li>
-                            <li class="spanish">Programa de referidos con beneficios</li>
-                            <li class="english">Referral program with benefits</li>
-                        </ul>
-                    </div>
-                </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <h3>Investment Opportunity</h3>
+                <p style="color: #666; margin: 1rem 0;">
+                    We're currently raising our Series B round to accelerate global expansion and enhance our AI capabilities.
+                </p>
+                <button class="btn-primary">Contact Investor Relations</button>
             </div>
         </div>
-    </div>
-
-    <!-- CTA Section -->
-    <section class="faq-cta">
-        <h2 class="spanish">¿Todavía tenés preguntas?</h2>
-        <h2 class="english">Still have questions?</h2>
-        <p class="spanish">Estamos acá para ayudarte a preservar tu historia</p>
-        <p class="english">We're here to help you preserve your story</p>
-        <a href="capturar-historia.html" class="btn">
-            <span class="spanish">Comenzar Ahora</span>
-            <span class="english">Start Now</span>
-        </a>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p class="spanish">© 2025 Cómo Sucedió - Un proyecto de <a href="https://multicomm.vercel.app">Multicomm AI</a></p>
-        <p class="english">© 2025 How It Happened - A project by <a href="https://multicomm.vercel.app">Multicomm AI</a></p>
+        <div class="container">
+            <p>&copy; 2025 Multicomm.ai. All rights reserved.</p>
+            <p>Contact: investors@multicomm.ai</p>
+        </div>
     </footer>
-
-    <script>
-        // Language toggle
-        function toggleLanguage() {
-            document.body.classList.toggle('en');
-        }
-
-        // Category switching
-        function showCategory(category) {
-            // Hide all categories
-            document.querySelectorAll('.faq-category-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Remove active from all buttons
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Show selected category
-            document.getElementById(category).classList.add('active');
-            
-            // Add active to clicked button
-            event.target.classList.add('active');
-        }
-
-        // FAQ accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const wasActive = faqItem.classList.contains('active');
-                
-                // Close all other items in the same category
-                const category = faqItem.closest('.faq-category-section');
-                category.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Toggle current item
-                if (!wasActive) {
-                    faqItem.classList.add('active');
-                }
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 </html>
