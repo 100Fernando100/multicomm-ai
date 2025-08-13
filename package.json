@@ -1,0 +1,9 @@
+{
+  "name": "multicomm-ai",
+  "version": "1.0.0",
+  "description": "Multicomm.ai - AI-Powered Business Communication Platform",
+  "scripts": {
+    "dev": "echo 'Open index.html in browser'",
+    "build": "echo 'No build needed'"
+  }
+}
