@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversá con tus Seres Queridos - Voces que Perduran</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --warm-cream: #FFF8E7;
+            --warm-terracotta: #D2691E;
+            --warm-sage: #87A96B;
+            --warm-brown: #8B4513;
+            --chat-bg: #F5E6D3;
+            --message-sent: #DCF8C6;
+            --message-received: #FFFFFF;
+            --text-primary: #303030;
+            --text-secondary: #667781;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--warm-cream);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .chat-header {
+            background: var(--warm-terracotta);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 2px 5px var(--shadow);
+            z-index: 10;
+        }
+        
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .profile-pic {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--warm-sage);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+        
+        .profile-status {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .header-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        
+        .header-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            background-color: var(--chat-bg);
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 35px,
+                    rgba(255, 255, 255, .1) 35px,
+                    rgba(255, 255, 255, .1) 70px
+                );
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        /* Messages */
+        .message {
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 0.5rem;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.sent {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 0.8rem 1rem;
+            border-radius: 18px;
+            position: relative;
+            box-shadow: 0 1px 2px var(--shadow);
+        }
+        
+        .message.sent .message-content {
+            background: var(--message-sent);
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.received .message-content {
+            background: var(--message-received);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-text {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .message.sent .message-time {
+            justify-content: flex-end;
+        }
+        
+        /* Typing Indicator */
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+        
+        .typing-indicator.active {
+            display: flex;
+        }
+        
+        .typing-bubble {
+            background: var(--message-received);
+            padding: 1rem 1.2rem;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 2px var(--shadow);
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 0.3rem;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typingDot 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typingDot {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+        
+        /* Suggestions */
+        .suggestions-container {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 0.5rem;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .suggestions-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .suggestion-chip {
+            background: white;
+            border: 1px solid var(--warm-sage);
+            color: var(--warm-brown);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .suggestion-chip:hover {
+            background: var(--warm-sage);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Input Area */
+        .input-container {
+            background: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 -2px 5px var(--shadow);
+        }
+        
+        .input-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #F0F2F5;
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+        }
+        
+        .message-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 1rem;
+            color: var(--text-primary);
+            resize: none;
+            max-height: 100px;
+            line-height: 1.4;
+        }
+        
+        .message-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .emoji-button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        .emoji-button:hover {
+            opacity: 1;
+        }
+        
+        .send-button {
+            background: var(--warm-terracotta);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .send-button:hover {
+            background: var(--warm-brown);
+            transform: scale(1.05);
+        }
+        
+        .send-button:active {
+            transform: scale(0.95);
+        }
+        
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--warm-cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .welcome-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .welcome-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 400px;
+        }
+        
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--warm-terracotta);
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .person-select {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--warm-sage);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            background: white;
+            color: var(--text-primary);
+        }
+        
+        .start-chat-button {
+            background: linear-gradient(135deg, var(--warm-terracotta), var(--warm-sage));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .start-chat-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .start-chat-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .empty-state-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .empty-state-subtext {
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .message-content {
+                max-width: 85%;
+            }
+            
+            .welcome-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <h1 class="welcome-title">Voces que Perduran</h1>
+            <p class="welcome-subtitle">
+                Conectate con los recuerdos y la sabiduría de tus seres queridos. 
+                Elegí con quién querés conversar:
+            </p>
+            <select class="person-select" id="personSelect">
+                <option value="">Seleccioná una persona...</option>
+                <option value="Maria Garcia">María García (Abuela)</option>
+                <option value="Juan Perez">Juan Pérez (Abuelo)</option>
+                <option value="demo">Demo - Ejemplo</option>
+            </select>
+            <button class="start-chat-button" id="startChatBtn" disabled>
+                Comenzar Conversación
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat Header -->
+    <header class="chat-header">
+        <button class="back-button" onclick="location.reload()">
+            ←
+        </button>
+        <div class="profile-pic" id="profilePic">
+            👴
+        </div>
+        <div class="profile-info">
+            <div class="profile-name" id="profileName">Abuelo</div>
+            <div class="profile-status">Siempre en tu corazón ❤️</div>
+        </div>
+        <div class="header-actions">
+            <button class="header-button" title="Información">
+                ℹ️
+            </button>
+        </div>
+    </header>
+
+    <!-- Chat Messages -->
+    <div class="chat-container" id="chatContainer">
+        <div class="empty-state" id="emptyState">
+            <div class="empty-state-icon">💬</div>
+            <div class="empty-state-text">Comenzá una conversación</div>
+            <div class="empty-state-subtext">Preguntale sobre su vida, sus recuerdos, sus consejos...</div>
+        </div>
+    </div>
+
+    <!-- Typing Indicator -->
+    <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-bubble">
+            <div class="typing-dots">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggestions -->
+    <div class="suggestions-container" id="suggestionsContainer">
+        <div class="suggestion-chip" onclick="sendSuggestion('¿Cómo era tu infancia?')">
+            ¿Cómo era tu infancia?
+        </div>
+        <div class="suggestion-chip" onclick="sendSuggestion('¿Cuál fue el día más feliz de tu vida?')">
+            ¿Cuál fue el día más feliz de tu vida?
+        </div>
+        <div class="suggestion-chip" onclick="sendSuggestion('¿Qué consejo me darías?')">
+            ¿Qué consejo me darías?
+        </div>
+        <div class="suggestion-chip" onclick="sendSuggestion('Contame sobre la familia')">
+            Contame sobre la familia
+        </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-container">
+        <div class="input-wrapper">
+            <textarea 
+                class="message-input" 
+                id="messageInput" 
+                placeholder="Escribí tu mensaje..."
+                rows="1"
+                onkeypress="handleKeyPress(event)"
+            ></textarea>
+            <button class="emoji-button" onclick="insertEmoji()">
+                😊
+            </button>
+        </div>
+        <button class="send-button" id="sendButton" onclick="sendMessage()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 12L21 3L12 21L10 13L3 12Z" fill="white"/>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // Configuration
+        const WEBHOOK_URL = 'http://localhost:5678/webhook/voces-query';
+        let selectedPerson = '';
+        let messageHistory = [];
+
+        // DOM Elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const personSelect = document.getElementById('personSelect');
+        const startChatBtn = document.getElementById('startChatBtn');
+        const profileName = document.getElementById('profileName');
+        const profilePic = document.getElementById('profilePic');
+        const chatContainer = document.getElementById('chatContainer');
+        const emptyState = document.getElementById('emptyState');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const suggestionsContainer = document.getElementById('suggestionsContainer');
+
+        // Initialize
+        personSelect.addEventListener('change', (e) => {
+            selectedPerson = e.target.value;
+            startChatBtn.disabled = !selectedPerson;
+        });
+
+        startChatBtn.addEventListener('click', () => {
+            if (selectedPerson) {
+                welcomeScreen.classList.add('hidden');
+                profileName.textContent = selectedPerson.split(' ')[0];
+                
+                // Set appropriate emoji
+                if (selectedPerson.includes('Abuela') || selectedPerson.includes('Maria')) {
+                    profilePic.textContent = '👵';
+                } else {
+                    profilePic.textContent = '👴';
+                }
+                
+                // Add welcome message
+                setTimeout(() => {
+                    addMessage(
+                        `¡Hola mi querido! Soy ${selectedPerson.split(' ')[0]}. Me alegra mucho poder conversar con vos. ¿Qué te gustaría saber?`,
+                        false
+                    );
+                }, 500);
+            }
+        });
+
+        // Send message
+        async function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, true);
+            
+            // Clear input
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            
+            // Hide suggestions
+            suggestionsContainer.style.display = 'none';
+            
+            // Show typing indicator
+            showTyping();
+
+            try {
+                // Send to webhook
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: message,
+                        personName: selectedPerson,
+                        conversationHistory: messageHistory
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta');
+                }
+
+                const data = await response.json();
+                
+                // Hide typing indicator
+                hideTyping();
+                
+                // Add response
+                addMessage(data.response, false);
+                
+                // Update suggestions if provided
+                if (data.suggestions && data.suggestions.length > 0) {
+                    updateSuggestions(data.suggestions);
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                hideTyping();
+                
+                // For demo purposes, show a simulated response
+                if (selectedPerson === 'demo') {
+                    setTimeout(() => {
+                        addMessage(getDemoResponse(message), false);
+                        suggestionsContainer.style.display = 'flex';
+                    }, 1500);
+                } else {
+                    addMessage('Disculpá, tuve un problema al recordar. ¿Podés preguntarme de nuevo?', false);
+                }
+            }
+        }
+
+        // Add message to chat
+        function addMessage(text, isSent) {
+            // Remove empty state
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isSent ? 'sent' : 'received'}`;
+            
+            const time = new Date().toLocaleTimeString('es-AR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-text">${text}</div>
+                    <div class="message-time">
+                        ${time}
+                        ${isSent ? '<span>✓✓</span>' : ''}
+                    </div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // Add to history
+            messageHistory.push({ text, isSent, time });
+        }
+
+        // Show typing indicator
+        function showTyping() {
+            typingIndicator.classList.add('active');
+            chatContainer.appendChild(typingIndicator);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Hide typing indicator
+        function hideTyping() {
+            typingIndicator.classList.remove('active');
+        }
+
+        // Handle key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Auto-resize textarea
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Send suggestion
+        function sendSuggestion(text) {
+            messageInput.value = text;
+            sendMessage();
+        }
+
+        // Update suggestions
+        function updateSuggestions(suggestions) {
+            suggestionsContainer.innerHTML = '';
+            suggestions.forEach(suggestion => {
+                const chip = document.createElement('div');
+                chip.className = 'suggestion-chip';
+                chip.textContent = suggestion;
+                chip.onclick = () => sendSuggestion(suggestion);
+                suggestionsContainer.appendChild(chip);
+            });
+            suggestionsContainer.style.display = 'flex';
+        }
+
+        // Insert emoji
+        function insertEmoji() {
+            const emojis = ['😊', '❤️', '🙏', '😂', '🥰', '😢', '👍', '🤗'];
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            messageInput.value += emoji;
+            messageInput.focus();
+        }
+
+        // Demo responses
+        function getDemoResponse(question) {
+            const responses = {
+                'infancia': 'Mi infancia fue hermosa, llena de aventuras en el campo. Recuerdo correr descalzo por los pastizales y trepar a los árboles frutales. Eran tiempos más simples pero muy felices.',
+                'feliz': 'El día más feliz de mi vida fue cuando naciste vos. Ver tu carita por primera vez me llenó el corazón de una alegría que nunca había sentido. Ese día entendí lo que es el amor verdadero.',
+                'consejo': 'Mi consejo más importante es que siempre seas fiel a vos mismo. La vida va a ponerte pruebas, pero si mantenés tus valores y tratás a los demás con respeto y amor, vas a encontrar tu camino.',
+                'familia': 'Nuestra familia siempre fue unida. Tu abuela era el pilar de la casa, con su amor incondicional. Tus padres son personas maravillosas que te aman profundamente. Recordá siempre de dónde venís.',
+                'default': 'Qué linda pregunta, mi querido. Dejame pensar... Cada recuerdo que tengo está lleno de amor por vos y por toda la familia. ¿Hay algo específico que te gustaría saber?'
+            };
+
+            const lowercaseQuestion = question.toLowerCase();
+            for (const [key, response] of Object.entries(responses)) {
+                if (lowercaseQuestion.includes(key)) {
+                    return response;
+                }
+            }
+            return responses.default;
+        }
+    </script>
+</body>
+</html>

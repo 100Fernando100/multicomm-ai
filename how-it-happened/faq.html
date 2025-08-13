@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes - Cómo Sucedió | Multicomm AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --warm-terracotta: #E07B4F;
+            --soft-cream: #FFF8F3;
+            --sage-green: #7C9885;
+            --deep-brown: #5C4033;
+            --light-gray: #F7F7F7;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--soft-cream);
+        }
+        
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            z-index: 1001;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .language-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Hide English content by default */
+        .english {
+            display: none;
+        }
+        
+        body.en .spanish {
+            display: none;
+        }
+        
+        body.en .english {
+            display: block;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--warm-terracotta);
+        }
+        
+        /* FAQ Section */
+        .faq-hero {
+            margin-top: 80px;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, var(--soft-cream) 0%, #FFF 50%, var(--soft-cream) 100%);
+            text-align: center;
+        }
+        
+        .faq-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .faq-hero p {
+            font-size: 1.3rem;
+            color: var(--deep-brown);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* FAQ Categories */
+        .faq-categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            padding: 0 2rem;
+        }
+        
+        .category-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid var(--warm-terracotta);
+            background: white;
+            color: var(--warm-terracotta);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--warm-terracotta);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        /* FAQ Container */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .faq-category-section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .faq-category-section.active {
+            display: block;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--deep-brown);
+            transition: all 0.3s;
+        }
+        
+        .faq-question:hover {
+            color: var(--warm-terracotta);
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--warm-terracotta);
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .faq-answer-content ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .faq-answer-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* CTA Section */
+        .faq-cta {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-radius: 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .faq-cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .faq-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
+            background: white;
+            color: var(--warm-terracotta);
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--deep-brown);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        footer a {
+            color: var(--warm-terracotta);
+            text-decoration: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .faq-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .faq-categories {
+                gap: 0.5rem;
+            }
+            
+            .category-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .language-toggle {
+                top: 15px;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle" onclick="toggleLanguage()">
+        🌐 ES/EN
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Cómo Sucedió - FAQ</div>
+            <ul class="nav-links">
+                <li><a href="../../index.html">
+                    <span class="spanish">Inicio</span>
+                    <span class="english">Home</span>
+                </a></li>
+                <li><a href="capturar-historia.html">
+                    <span class="spanish">Capturar Historia</span>
+                    <span class="english">Capture Story</span>
+                </a></li>
+                <li><a href="chat.html">Demo</a></li>
+                <li><a href="https://multicomm.vercel.app">Multicomm AI</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- FAQ Hero -->
+    <section class="faq-hero">
+        <h1 class="spanish">Preguntas Frecuentes</h1>
+        <h1 class="english">Frequently Asked Questions</h1>
+        <p class="spanish">Todo lo que necesitás saber sobre preservar tu esencia digital</p>
+        <p class="english">Everything you need to know about preserving your digital essence</p>
+    </section>
+
+    <!-- FAQ Categories -->
+    <div class="faq-categories">
+        <button class="category-btn active" onclick="showCategory('general')">
+            <span class="spanish">General</span>
+            <span class="english">General</span>
+        </button>
+        <button class="category-btn" onclick="showCategory('technical')">
+            <span class="spanish">Técnico</span>
+            <span class="english">Technical</span>
+        </button>
+        <button class="category-btn" onclick="showCategory('privacy')">
+            <span class="spanish">Privacidad</span>
+            <span class="english">Privacy</span>
+        </button>
+        <button class="category-btn" onclick="showCategory('pricing')">
+            <span class="spanish">Precios</span>
+            <span class="english">Pricing</span>
+        </button>
+    </div>
+
+    <!-- FAQ Content -->
+    <div class="faq-container">
+        <!-- General Category -->
+        <div class="faq-category-section active" id="general">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Qué es exactamente "Cómo Sucedió"?</span>
+                    <span class="english">What exactly is "How It Happened"?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            "Cómo Sucedió" es un sistema revolucionario que preserva tu esencia completa - tu imagen, voz, conocimientos y personalidad - en un avatar digital interactivo. No es solo una grabación; es una IA que puede mantener conversaciones reales basadas en todo lo que compartiste, permitiendo que futuras generaciones (o tu yo futuro) conversen contigo como si estuvieras presente.
+                        </p>
+                        <p class="english">
+                            "How It Happened" is a revolutionary system that preserves your complete essence - your image, voice, knowledge, and personality - in an interactive digital avatar. It's not just a recording; it's an AI that can have real conversations based on everything you shared, allowing future generations (or your future self) to converse with you as if you were present.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Para quién está diseñado este servicio?</span>
+                    <span class="english">Who is this service designed for?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Está diseñado para todos, pero especialmente para:
+                        </p>
+                        <p class="english">
+                            It's designed for everyone, but especially for:
+                        </p>
+                        <ul>
+                            <li class="spanish"><strong>Personas mayores:</strong> Para preservar su sabiduría y que sus nietos siempre puedan consultarles</li>
+                            <li class="english"><strong>Seniors:</strong> To preserve their wisdom so grandchildren can always consult them</li>
+                            <li class="spanish"><strong>Familias:</strong> Para mantener vivas las historias familiares</li>
+                            <li class="english"><strong>Families:</strong> To keep family stories alive</li>
+                            <li class="spanish"><strong>Emprendedores:</strong> Para documentar su journey y decisiones</li>
+                            <li class="english"><strong>Entrepreneurs:</strong> To document their journey and decisions</li>
+                            <li class="spanish"><strong>Cualquier persona:</strong> Que quiera crear checkpoints de su vida</li>
+                            <li class="english"><strong>Anyone:</strong> Who wants to create life checkpoints</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Cómo es diferente de un video normal?</span>
+                    <span class="english">How is it different from a regular video?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Un video es estático y unidireccional. Nuestro sistema crea un avatar interactivo que puede:
+                        </p>
+                        <p class="english">
+                            A video is static and one-directional. Our system creates an interactive avatar that can:
+                        </p>
+                        <ul>
+                            <li class="spanish">Responder preguntas nuevas que nunca fueron grabadas</li>
+                            <li class="english">Answer new questions that were never recorded</li>
+                            <li class="spanish">Mantener conversaciones naturales y fluidas</li>
+                            <li class="english">Maintain natural, fluid conversations</li>
+                            <li class="spanish">Adaptar sus respuestas según el contexto</li>
+                            <li class="english">Adapt responses according to context</li>
+                            <li class="spanish">Recordar información compartida y conectar ideas</li>
+                            <li class="english">Remember shared information and connect ideas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Category -->
+        <div class="faq-category-section" id="technical">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Qué tecnología utilizan?</span>
+                    <span class="english">What technology do you use?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Utilizamos tecnología de vanguardia:
+                        </p>
+                        <p class="english">
+                            We use cutting-edge technology:
+                        </p>
+                        <ul>
+                            <li class="spanish"><strong>HeyGen:</strong> Para crear avatares digitales realistas con tus gestos</li>
+                            <li class="english"><strong>HeyGen:</strong> To create realistic digital avatars with your gestures</li>
+                            <li class="spanish"><strong>ElevenLabs:</strong> Para clonar tu voz con precisión asombrosa</li>
+                            <li class="english"><strong>ElevenLabs:</strong> To clone your voice with amazing precision</li>
+                            <li class="spanish"><strong>IA con RAG:</strong> Para procesar y entender tu conocimiento</li>
+                            <li class="english"><strong>AI with RAG:</strong> To process and understand your knowledge</li>
+                            <li class="spanish"><strong>Multicomm AI:</strong> Nuestra plataforma propietaria que integra todo</li>
+                            <li class="english"><strong>Multicomm AI:</strong> Our proprietary platform that integrates everything</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Cuánto tiempo lleva crear mi avatar?</span>
+                    <span class="english">How long does it take to create my avatar?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            El proceso completo incluye:
+                        </p>
+                        <p class="english">
+                            The complete process includes:
+                        </p>
+                        <ul>
+                            <li class="spanish"><strong>Sesión inicial:</strong> 2-3 horas de grabación</li>
+                            <li class="english"><strong>Initial session:</strong> 2-3 hours of recording</li>
+                            <li class="spanish"><strong>Procesamiento:</strong> 24-48 horas para crear el avatar</li>
+                            <li class="english"><strong>Processing:</strong> 24-48 hours to create the avatar</li>
+                            <li class="spanish"><strong>Revisión:</strong> 1 hora para ajustes finales</li>
+                            <li class="english"><strong>Review:</strong> 1 hour for final adjustments</li>
+                            <li class="spanish"><strong>Total:</strong> En 3 días tenés tu avatar listo</li>
+                            <li class="english"><strong>Total:</strong> In 3 days your avatar is ready</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Qué necesito para la grabación?</span>
+                    <span class="english">What do I need for recording?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Solo necesitás:
+                        </p>
+                        <p class="english">
+                            You only need:
+                        </p>
+                        <ul>
+                            <li class="spanish">Una computadora o smartphone con cámara</li>
+                            <li class="english">A computer or smartphone with camera</li>
+                            <li class="spanish">Conexión a internet estable</li>
+                            <li class="english">Stable internet connection</li>
+                            <li class="spanish">Un lugar tranquilo sin ruido de fondo</li>
+                            <li class="english">A quiet place without background noise</li>
+                            <li class="spanish">2-3 horas de tu tiempo</li>
+                            <li class="english">2-3 hours of your time</li>
+                        </ul>
+                        <p class="spanish">
+                            Nosotros te guiamos paso a paso durante todo el proceso.
+                        </p>
+                        <p class="english">
+                            We guide you step by step throughout the process.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Category -->
+        <div class="faq-category-section" id="privacy">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Qué tan segura es mi información?</span>
+                    <span class="english">How secure is my information?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Tu privacidad es nuestra prioridad:
+                        </p>
+                        <p class="english">
+                            Your privacy is our priority:
+                        </p>
+                        <ul>
+                            <li class="spanish">Encriptación de nivel bancario para todos los datos</li>
+                            <li class="english">Bank-level encryption for all data</li>
+                            <li class="spanish">Servidores seguros con respaldo múltiple</li>
+                            <li class="english">Secure servers with multiple backups</li>
+                            <li class="spanish">Control total sobre quién accede a tu avatar</li>
+                            <li class="english">Full control over who accesses your avatar</li>
+                            <li class="spanish">Cumplimos con GDPR y regulaciones de privacidad</li>
+                            <li class="english">We comply with GDPR and privacy regulations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Quién puede acceder a mi avatar?</span>
+                    <span class="english">Who can access my avatar?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Vos tenés control total:
+                        </p>
+                        <p class="english">
+                            You have full control:
+                        </p>
+                        <ul>
+                            <li class="spanish">Podés crear una lista de personas autorizadas</li>
+                            <li class="english">You can create a list of authorized people</li>
+                            <li class="spanish">Cada persona recibe un acceso único</li>
+                            <li class="english">Each person receives unique access</li>
+                            <li class="spanish">Podés revocar accesos en cualquier momento</li>
+                            <li class="english">You can revoke access at any time</li>
+                            <li class="spanish">Opción de hacer cierta información pública o privada</li>
+                            <li class="english">Option to make certain information public or private</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Puedo eliminar mi avatar?</span>
+                    <span class="english">Can I delete my avatar?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Sí, mantenés control total sobre tu información. Podés solicitar la eliminación completa en cualquier momento, aunque recomendamos considerar el valor que puede tener para futuras generaciones.
+                        </p>
+                        <p class="english">
+                            Yes, you maintain full control over your information. You can request complete deletion at any time, though we recommend considering the value it may have for future generations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing Category -->
+        <div class="faq-category-section" id="pricing">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Cuánto cuesta el servicio?</span>
+                    <span class="english">How much does the service cost?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Ofrecemos diferentes planes según tus necesidades:
+                        </p>
+                        <p class="english">
+                            We offer different plans according to your needs:
+                        </p>
+                        <ul>
+                            <li class="spanish"><strong>Plan Básico:</strong> Avatar con conversaciones limitadas</li>
+                            <li class="english"><strong>Basic Plan:</strong> Avatar with limited conversations</li>
+                            <li class="spanish"><strong>Plan Familiar:</strong> Acceso ilimitado para toda la familia</li>
+                            <li class="english"><strong>Family Plan:</strong> Unlimited access for the whole family</li>
+                            <li class="spanish"><strong>Plan Legacy:</strong> Preservación garantizada por 100 años</li>
+                            <li class="english"><strong>Legacy Plan:</strong> Guaranteed preservation for 100 years</li>
+                        </ul>
+                        <p class="spanish">
+                            Contactanos para una consulta personalizada y precios específicos.
+                        </p>
+                        <p class="english">
+                            Contact us for a personalized consultation and specific pricing.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Hay costos adicionales?</span>
+                    <span class="english">Are there additional costs?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            El precio incluye todo: grabación, procesamiento, almacenamiento y acceso. No hay costos ocultos. Las actualizaciones futuras de tu avatar (agregar nuevas historias o momentos) tienen un costo reducido.
+                        </p>
+                        <p class="english">
+                            The price includes everything: recording, processing, storage, and access. There are no hidden costs. Future updates to your avatar (adding new stories or moments) have a reduced cost.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span class="spanish">¿Ofrecen descuentos?</span>
+                    <span class="english">Do you offer discounts?</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">
+                        <p class="spanish">
+                            Sí, ofrecemos:
+                        </p>
+                        <p class="english">
+                            Yes, we offer:
+                        </p>
+                        <ul>
+                            <li class="spanish">Descuentos para personas mayores de 65 años</li>
+                            <li class="english">Discounts for people over 65</li>
+                            <li class="spanish">Planes grupales para familias</li>
+                            <li class="english">Group plans for families</li>
+                            <li class="spanish">Promociones especiales en fechas importantes</li>
+                            <li class="english">Special promotions on important dates</li>
+                            <li class="spanish">Programa de referidos con beneficios</li>
+                            <li class="english">Referral program with benefits</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="faq-cta">
+        <h2 class="spanish">¿Todavía tenés preguntas?</h2>
+        <h2 class="english">Still have questions?</h2>
+        <p class="spanish">Estamos acá para ayudarte a preservar tu historia</p>
+        <p class="english">We're here to help you preserve your story</p>
+        <a href="capturar-historia.html" class="btn">
+            <span class="spanish">Comenzar Ahora</span>
+            <span class="english">Start Now</span>
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="spanish">© 2025 Cómo Sucedió - Un proyecto de <a href="https://multicomm.vercel.app">Multicomm AI</a></p>
+        <p class="english">© 2025 How It Happened - A project by <a href="https://multicomm.vercel.app">Multicomm AI</a></p>
+    </footer>
+
+    <script>
+        // Language toggle
+        function toggleLanguage() {
+            document.body.classList.toggle('en');
+        }
+
+        // Category switching
+        function showCategory(category) {
+            // Hide all categories
+            document.querySelectorAll('.faq-category-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected category
+            document.getElementById(category).classList.add('active');
+            
+            // Add active to clicked button
+            event.target.classList.add('active');
+        }
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const wasActive = faqItem.classList.contains('active');
+                
+                // Close all other items in the same category
+                const category = faqItem.closest('.faq-category-section');
+                category.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!wasActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

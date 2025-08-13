@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compartí tu Historia - Voces que Perduran</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --warm-cream: #FFF8E7;
+            --warm-terracotta: #D2691E;
+            --warm-sage: #87A96B;
+            --warm-brown: #8B4513;
+            --soft-gray: #6B6B6B;
+            --white: #FFFFFF;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--warm-cream) 0%, #F5E6D3 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Elementos decorativos de fondo */
+        .bg-decoration {
+            position: fixed;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .bg-circle-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--warm-terracotta);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            filter: blur(100px);
+        }
+        
+        .bg-circle-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--warm-sage);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            filter: blur(80px);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--warm-terracotta);
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            color: var(--warm-sage);
+            font-style: italic;
+            font-size: 1.2rem;
+        }
+        
+        /* Formulario */
+        .form-card {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px var(--shadow);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--warm-brown);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .section-icon {
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .required {
+            color: var(--warm-terracotta);
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E8E8E8;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #FAFAFA;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--warm-sage);
+            background: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(135, 169, 107, 0.2);
+        }
+        
+        textarea {
+            min-height: 250px;
+            resize: vertical;
+            font-family: inherit;
+            line-height: 1.5;
+        }
+        
+        /* Tags */
+        .tags-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .tag-item {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            background: #F5F5F5;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tag-item:hover {
+            background: var(--warm-cream);
+            transform: translateY(-2px);
+        }
+        
+        .tag-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .tag-item.selected {
+            background: var(--warm-sage);
+            color: white;
+        }
+        
+        /* Botones de audio */
+        .audio-section {
+            background: #F9F9F9;
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+        }
+        
+        .audio-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .audio-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .record-btn {
+            background: var(--warm-terracotta);
+            color: white;
+        }
+        
+        .record-btn:hover {
+            background: #B8560F;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(210, 105, 30, 0.3);
+        }
+        
+        .stop-btn {
+            background: #DC3545;
+            color: white;
+        }
+        
+        .recording-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #DC3545;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background: #DC3545;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+        
+        /* Botón de envío */
+        .submit-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--warm-terracotta), var(--warm-sage));
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Mensajes */
+        .message {
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 600;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        .success-message {
+            background: #D4EDDA;
+            color: #155724;
+            border: 2px solid #C3E6CB;
+        }
+        
+        .error-message {
+            background: #F8D7DA;
+            color: #721C24;
+            border: 2px solid #F5C6CB;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--soft-gray);
+            font-size: 0.9rem;
+        }
+        
+        .footer a {
+            color: var(--warm-terracotta);
+            text-decoration: none;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .form-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .tags-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Decoración de fondo -->
+    <div class="bg-decoration bg-circle-1"></div>
+    <div class="bg-decoration bg-circle-2"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">Voces que Perduran</h1>
+            <p class="tagline">Cada historia es un tesoro que trasciende el tiempo</p>
+        </header>
+        
+        <!-- Mensajes (ocultos por defecto) -->
+        <div class="success-message message" id="successMsg" style="display: none;">
+            ✨ ¡Historia guardada exitosamente! Gracias por compartir estos valiosos recuerdos.
+        </div>
+        
+        <div class="error-message message" id="errorMsg" style="display: none;">
+            ❌ Ocurrió un error al guardar la historia. Por favor, intentá nuevamente.
+        </div>
+        
+        <!-- Formulario -->
+        <form id="storyForm" class="form-card">
+            <!-- Información Personal -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="section-icon">👤</span>
+                    Información Personal
+                </h2>
+                
+                <div class="form-group">
+                    <label for="personName">
+                        Nombre completo <span class="required">*</span>
+                    </label>
+                    <input type="text" id="personName" name="personName" required 
+                           placeholder="Ej: María García de Rodríguez">
+                </div>
+                
+                <div class="form-group">
+                    <label for="personAge">Edad actual</label>
+                    <input type="number" id="personAge" name="personAge" 
+                           min="1" max="120" placeholder="Ej: 75">
+                </div>
+            </section>
+            
+            <!-- Contexto de la Historia -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="section-icon">📅</span>
+                    Contexto de la Historia
+                </h2>
+                
+                <div class="form-group">
+                    <label for="storyDate">
+                        Fecha aproximada de cuando ocurrió
+                    </label>
+                    <input type="date" id="storyDate" name="storyDate">
+                </div>
+                
+                <div class="form-group">
+                    <label for="emotion">
+                        ¿Qué emoción principal transmite esta historia?
+                    </label>
+                    <select id="emotion" name="emotion">
+                        <option value="alegria">😊 Alegría</option>
+                        <option value="nostalgia">🥺 Nostalgia</option>
+                        <option value="amor">❤️ Amor</option>
+                        <option value="orgullo">🏆 Orgullo</option>
+                        <option value="gratitud">🙏 Gratitud</option>
+                        <option value="esperanza">✨ Esperanza</option>
+                        <option value="aventura">🌟 Aventura</option>
+                        <option value="superacion">💪 Superación</option>
+                        <option value="neutral" selected>😌 Neutral</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Etiquetas (seleccioná todas las que apliquen)</label>
+                    <div class="tags-grid">
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="infancia">
+                            <span>👶 Infancia</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="juventud">
+                            <span>🌱 Juventud</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="familia">
+                            <span>👨‍👩‍👧‍👦 Familia</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="trabajo">
+                            <span>💼 Trabajo</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="amor">
+                            <span>💕 Amor</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="viajes">
+                            <span>✈️ Viajes</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="amigos">
+                            <span>🤝 Amigos</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="logros">
+                            <span>🎯 Logros</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="tradiciones">
+                            <span>🎭 Tradiciones</span>
+                        </label>
+                        <label class="tag-item">
+                            <input type="checkbox" name="tags" value="consejos">
+                            <span>💡 Consejos</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Historia -->
+            <section class="form-section">
+                <h2 class="section-title">
+                    <span class="section-icon">📖</span>
+                    Tu Historia
+                </h2>
+                
+                <div class="form-group">
+                    <label for="story">
+                        Contá tu historia <span class="required">*</span>
+                    </label>
+                    <textarea id="story" name="story" required 
+                              placeholder="Compartí tu recuerdo aquí... ¿Cómo empezó? ¿Qué sentiste? ¿Qué aprendiste? ¿Por qué es importante para vos?&#10;&#10;No te preocupes por la extensión, escribí todo lo que quieras recordar y compartir con tu familia."></textarea>
+                    
+                    <div class="audio-section">
+                        <p style="text-align: center; color: #666;">
+                            ¿Preferís contar tu historia hablando? Grabá tu voz:
+                        </p>
+                        
+                        <div class="audio-controls">
+                            <button type="button" class="audio-btn record-btn" id="recordBtn">
+                                🎙️ Grabar Historia
+                            </button>
+                            <button type="button" class="audio-btn stop-btn" id="stopBtn" style="display: none;">
+                                ⏹️ Detener
+                            </button>
+                        </div>
+                        
+                        <div class="recording-indicator" id="recordingIndicator" style="display: none;">
+                            <div class="recording-dot"></div>
+                            <span>Grabando tu historia...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Grabación de Avatar -->
+            <section class="form-section" style="background: linear-gradient(135deg, #FFF8E7 0%, #FFE4CC 100%); padding: 2rem; border-radius: 20px; margin-top: 2rem;">
+                <h2 class="section-title">
+                    <span class="section-icon">🎥</span>
+                    Tu Avatar Digital
+                </h2>
+                
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <p style="font-size: 1.1rem; color: #666; line-height: 1.8;">
+                        Para que tu familia pueda verte y escucharte siempre, necesitamos crear tu avatar digital.
+                        <br>
+                        <strong style="color: var(--warm-terracotta);">Es un paso único y muy sencillo:</strong>
+                    </p>
+                </div>
+                
+                <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem;">
+                    <h3 style="color: var(--warm-brown); margin-bottom: 1rem;">📱 Pasos para grabar tu video:</h3>
+                    <ol style="line-height: 2; color: #555;">
+                        <li><strong>Elegí un lugar con buena luz</strong> (preferentemente luz natural)</li>
+                        <li><strong>Ubicá la cámara a la altura de tus ojos</strong></li>
+                        <li><strong>Grabá 2-3 minutos hablando naturalmente</strong> sobre:
+                            <ul style="margin-top: 0.5rem; margin-left: 2rem;">
+                                <li>Presentate con tu nombre completo</li>
+                                <li>Contá brevemente sobre tu vida</li>
+                                <li>Mencioná a tu familia</li>
+                                <li>Compartí algún recuerdo especial</li>
+                            </ul>
+                        </li>
+                        <li><strong>Hablá como si estuvieras con tu familia</strong>, natural y cálido</li>
+                    </ol>
+                </div>
+                
+                <div style="background: #E8F5E9; padding: 1.5rem; border-radius: 15px; border: 2px solid #81C784;">
+                    <p style="color: #2E7D32; font-weight: 600; margin-bottom: 0.5rem;">
+                        ✨ Con este único video, HeyGen creará tu avatar digital
+                    </p>
+                    <p style="color: #388E3C;">
+                        Tu familia podrá hacerte preguntas y tu avatar responderá con tu voz y tus gestos, 
+                        usando todas las historias que compartiste.
+                    </p>
+                </div>
+                
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label for="videoFile">
+                        Subir video de presentación <span class="required">*</span>
+                    </label>
+                    
+                    <p style="margin: 0.5rem 0; text-align: center;">
+                        <a href="guia-video.html" 
+                           style="color: var(--warm-terracotta); 
+                                  text-decoration: none; 
+                                  font-weight: 600;
+                                  font-size: 1.1rem;
+                                  display: inline-block;
+                                  padding: 0.5rem;
+                                  transition: all 0.3s ease;">
+                            📹 ¿Necesitás ayuda para grabar? Ver guía paso a paso
+                        </a>
+                    </p>
+                    
+                    <input type="file" 
+                           id="videoFile" 
+                           name="videoFile" 
+                           accept="video/*" 
+                           style="display: none;">
+                    
+                    <div style="border: 3px dashed var(--warm-terracotta); 
+                                border-radius: 20px; 
+                                padding: 3rem; 
+                                text-align: center; 
+                                cursor: pointer;
+                                transition: all 0.3s ease;"
+                         id="videoUploadArea">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎬</div>
+                        <p style="font-size: 1.2rem; color: var(--warm-terracotta); font-weight: 600;">
+                            Click aquí para subir tu video
+                        </p>
+                        <p style="color: #666; margin-top: 0.5rem;">
+                            O arrastrá el archivo aquí
+                        </p>
+                        <p style="font-size: 0.9rem; color: #999; margin-top: 1rem;">
+                            Formatos aceptados: MP4, MOV, AVI (máximo 500MB)
+                        </p>
+                    </div>
+                    
+                    <div id="videoPreview" style="display: none; margin-top: 1rem;">
+                        <p style="color: var(--warm-sage); font-weight: 600;">
+                            ✅ Video cargado: <span id="videoFileName"></span>
+                        </p>
+                        <button type="button" 
+                                onclick="document.getElementById('videoFile').click()"
+                                style="margin-top: 0.5rem; 
+                                       padding: 0.5rem 1rem; 
+                                       background: #f0f0f0; 
+                                       border: none; 
+                                       border-radius: 10px; 
+                                       cursor: pointer;">
+                            Cambiar video
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="background: #FFF3E0; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p style="color: #E65100; font-size: 0.9rem;">
+                        <strong>💡 Tip:</strong> Si no tenés un video ahora, podés grabar uno con tu celular y subirlo después. 
+                        Lo importante es que se vea tu cara claramente y se escuche bien tu voz.
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Botón de envío -->
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    💝 Guardar Historia para Siempre
+                </button>
+            </div>
+        </form>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Un proyecto de <a href="https://multicomm.vercel.app" target="_blank">Multicomm.ai</a></p>
+            <p>Preservando memorias para las futuras generaciones</p>
+        </footer>
+    </div>
+    
+    <script>
+        // URL del webhook de n8n (cambiar cuando esté configurado)
+        const N8N_WEBHOOK_URL = 'http://localhost:5678/webhook/voces-ingest';
+        
+        // Referencias a elementos
+        const form = document.getElementById('storyForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successMsg = document.getElementById('successMsg');
+        const errorMsg = document.getElementById('errorMsg');
+        const recordBtn = document.getElementById('recordBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const recordingIndicator = document.getElementById('recordingIndicator');
+        const storyTextarea = document.getElementById('story');
+        
+        // Manejo de tags interactivos
+        document.querySelectorAll('.tag-item').forEach(tag => {
+            tag.addEventListener('click', function(e) {
+                if (e.target.type !== 'checkbox') {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                }
+                this.classList.toggle('selected');
+            });
+            
+            // Sincronizar estado inicial
+            const checkbox = tag.querySelector('input[type="checkbox"]');
+            if (checkbox.checked) {
+                tag.classList.add('selected');
+            }
+        });
+        
+        // Manejo del formulario
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Ocultar mensajes anteriores
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Deshabilitar botón
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Guardando...';
+            
+            // Recolectar datos
+            const formData = new FormData(form);
+            const tags = Array.from(formData.getAll('tags'));
+            
+            const data = {
+                personName: formData.get('personName'),
+                personAge: formData.get('personAge') || null,
+                storyDate: formData.get('storyDate') || null,
+                emotion: formData.get('emotion'),
+                tags: tags,
+                story: formData.get('story'),
+                storyId: Date.now().toString(),
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                // Simular envío (cambiar cuando n8n esté configurado)
+                console.log('Datos a enviar:', data);
+                
+                // Cuando n8n esté configurado, descomentar:
+                /*
+                const response = await fetch(N8N_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta');
+                }
+                */
+                
+                // Simular éxito
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Mostrar mensaje de éxito
+                successMsg.style.display = 'block';
+                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Limpiar formulario
+                form.reset();
+                document.querySelectorAll('.tag-item').forEach(tag => {
+                    tag.classList.remove('selected');
+                });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                errorMsg.style.display = 'block';
+                errorMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } finally {
+                // Restaurar botón
+                submitBtn.disabled = false;
+                submitBtn.textContent = '💝 Guardar Historia para Siempre';
+            }
+        });
+        
+        // Grabación de audio (placeholder)
+        let mediaRecorder;
+        let audioChunks = [];
+        
+        recordBtn.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    audioChunks = [];
+                    
+                    // Aquí se integraría con Whisper API para transcribir
+                    storyTextarea.value += '\n\n[Audio grabado - Integrar con Whisper API para transcripción]';
+                    storyTextarea.focus();
+                };
+                
+                mediaRecorder.start();
+                
+                // Actualizar UI
+                recordBtn.style.display = 'none';
+                stopBtn.style.display = 'inline-flex';
+                recordingIndicator.style.display = 'flex';
+                
+            } catch (error) {
+                console.error('Error al acceder al micrófono:', error);
+                alert('No se pudo acceder al micrófono. Por favor, verificá los permisos del navegador.');
+            }
+        });
+        
+        stopBtn.addEventListener('click', () => {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                
+                // Restaurar UI
+                recordBtn.style.display = 'inline-flex';
+                stopBtn.style.display = 'none';
+                recordingIndicator.style.display = 'none';
+            }
+        });
+        
+        // Manejo de video upload
+        const videoUploadArea = document.getElementById('videoUploadArea');
+        const videoFileInput = document.getElementById('videoFile');
+        const videoPreview = document.getElementById('videoPreview');
+        const videoFileName = document.getElementById('videoFileName');
+        
+        // Click en el área de upload
+        videoUploadArea.addEventListener('click', () => {
+            videoFileInput.click();
+        });
+        
+        // Drag and drop
+        videoUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            videoUploadArea.style.borderColor = '#87A96B';
+            videoUploadArea.style.backgroundColor = '#F5FFF5';
+        });
+        
+        videoUploadArea.addEventListener('dragleave', () => {
+            videoUploadArea.style.borderColor = 'var(--warm-terracotta)';
+            videoUploadArea.style.backgroundColor = 'transparent';
+        });
+        
+        videoUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            videoUploadArea.style.borderColor = 'var(--warm-terracotta)';
+            videoUploadArea.style.backgroundColor = 'transparent';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.startsWith('video/')) {
+                videoFileInput.files = files;
+                handleVideoSelect(files[0]);
+            }
+        });
+        
+        // Selección de archivo
+        videoFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleVideoSelect(e.target.files[0]);
+            }
+        });
+        
+        function handleVideoSelect(file) {
+            // Verificar tamaño (500MB)
+            const maxSize = 500 * 1024 * 1024;
+            if (file.size > maxSize) {
+                alert('El video es muy grande. Por favor, subí un video de menos de 500MB.');
+                return;
+            }
+            
+            // Mostrar preview
+            videoFileName.textContent = file.name;
+            videoUploadArea.style.display = 'none';
+            videoPreview.style.display = 'block';
+        }
+        
+        // Auto-guardar borrador (opcional)
+        let autoSaveTimer;
+        storyTextarea.addEventListener('input', () => {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                localStorage.setItem('vocesPerduran_draft', JSON.stringify({
+                    story: storyTextarea.value,
+                    personName: document.getElementById('personName').value,
+                    timestamp: new Date().toISOString()
+                }));
+            }, 2000);
+        });
+        
+        // Recuperar borrador si existe
+        window.addEventListener('load', () => {
+            const draft = localStorage.getItem('vocesPerduran_draft');
+            if (draft) {
+                const data = JSON.parse(draft);
+                if (confirm('Encontramos un borrador guardado. ¿Querés recuperarlo?')) {
+                    storyTextarea.value = data.story;
+                    document.getElementById('personName').value = data.personName;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
