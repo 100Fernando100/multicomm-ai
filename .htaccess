@@ -1,0 +1,66 @@
+# .htaccess para multicomm.ai
+# Configuración para estructura de idiomas /en y /es
+
+RewriteEngine On
+
+# Forzar HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Redirección automática según idioma del navegador
+# Si el usuario accede a la raíz del sitio
+RewriteCond %{REQUEST_URI} ^/?$
+RewriteCond %{HTTP:Accept-Language} ^es [NC]
+RewriteRule ^$ /es/ [L,R=302]
+
+# Por defecto redirigir a inglés
+RewriteCond %{REQUEST_URI} ^/?$
+RewriteRule ^$ /en/ [L,R=302]
+
+# Manejar códigos de idioma inválidos - redirigir a inglés
+RewriteCond %{REQUEST_URI} ^/([a-z]{2})/ [NC]
+RewriteCond %1 !^(en|es)$ [NC]
+RewriteRule ^[a-z]{2}/(.*)$ /en/$1 [R=301,L]
+
+# Reescritura interna para subdirectorios de idioma
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(en|es)/(.*)$ /$2?lang=$1 [L,QSA]
+
+# Prevenir contenido duplicado - forzar slash final en directorios
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*[^/])$ $1/ [R=301,L]
+
+# Configuración de seguridad adicional
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Comprensión Gzip
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache de navegador
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# Bloquear acceso a archivos sensibles
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Página de error personalizada (opcional)
+ErrorDocument 404 /404.html
