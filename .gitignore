@@ -1,1 +1,7 @@
 .vercel
+.env
+node_modules/
+package-lock.json  # Or keep if you want to lock versions; I recommend ignoring for now
+tsconfig.tsbuildinfo
+dist/  # Vite build output
+.env  # Secrets
