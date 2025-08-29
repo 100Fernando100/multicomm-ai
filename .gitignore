@@ -5,3 +5,7 @@ package-lock.json  # Or keep if you want to lock versions; I recommend ignoring 
 tsconfig.tsbuildinfo
 dist/  # Vite build output
 .env  # Secrets
+node_modules/
+dist/
+.env
+*.tsbuildinfo
